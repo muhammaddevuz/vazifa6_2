@@ -33,8 +33,4 @@ class Register extends AuthEvent {
   List<Object> get props => [name, phone, password];
 }
 
-class LoggedOut extends AuthEvent {
-  final String token;
-
-  LoggedOut({required this.token});
-}
+class LoggedOut extends AuthEvent {}

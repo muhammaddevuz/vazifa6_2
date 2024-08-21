@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vazifa/blocs/auth_bloc/auth_bloc.dart';
+import 'package:vazifa/blocs/group_bloc/group_bloc.dart';
 import 'package:vazifa/blocs/user_bloc/user_bloc.dart';
-import 'package:vazifa/ui/screens/home_screen.dart';
-import 'package:vazifa/ui/screens/signin_screen.dart';
-import 'package:vazifa/ui/screens/signup_for_teacher.dart';
-import 'package:vazifa/ui/screens/signup_screen.dart';
+import 'package:vazifa/blocs/users_bloc/users_bloc.dart';
+import 'package:vazifa/ui/screens/managment_screen.dart';
+import 'package:vazifa/ui/screens/auth_screen/signin_screen.dart';
+import 'package:vazifa/ui/screens/auth_screen/signup_for_teacher.dart';
+import 'package:vazifa/ui/screens/auth_screen/signup_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -17,7 +19,9 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => AuthBloc()..add(AppStarted())),
-        BlocProvider(create: (context) => UserBloc())
+        BlocProvider(create: (context) => UserBloc()),
+        BlocProvider(create: (context) => UsersBloc()),
+        BlocProvider(create: (context) => GroupBloc())
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -27,7 +31,7 @@ class MyApp extends StatelessWidget {
           '/': (context) => BlocBuilder<AuthBloc, AuthState>(
                 builder: (context, state) {
                   if (state is Authenticated) {
-                    return HomeScreen();
+                    return ManagmentScreen();
                   } else if (state is UnauthenticatedState) {
                     return SignInScreen();
                   } else {
@@ -38,7 +42,7 @@ class MyApp extends StatelessWidget {
               ),
           '/signup': (context) => SignUpScreen(),
           '/signupteacher': (context) => SignupForTeacher(),
-          '/home': (context) => HomeScreen(),
+          '/home': (context) => ManagmentScreen(),
         },
       ),
     );

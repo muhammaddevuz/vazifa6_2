@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:vazifa/data/model/user_model.dart';
 
 sealed class UserState extends Equatable {
   @override
@@ -10,7 +11,7 @@ class UserInitialState extends UserState {}
 class UserLoadingState extends UserState {}
 
 class UserLoadedState extends UserState {
-  final Map<String, dynamic> user;
+  final UserModel user;
 
   UserLoadedState({required this.user});
 }

@@ -1,7 +1,14 @@
 import 'package:dio/dio.dart';
+import 'package:vazifa/data/services/authentification_interseptor.dart';
+
 
 class AuthentificationService {
-  final dio = Dio();
+  final Dio dio;
+
+  AuthentificationService()
+      : dio = Dio() {
+    dio.interceptors.add(AuthInterceptor());
+  }
 
   Future<String> register(String name, String phoneNumber, int roleId,
       String password, String passwordConfirmation) async {
@@ -14,8 +21,6 @@ class AuthentificationService {
         'password': password,
         'password_confirmation': passwordConfirmation,
       });
-
-      print(response.data['data']['token']);
 
       return response.data['data']['token'];
     } on DioException catch (error) {
@@ -33,8 +38,6 @@ class AuthentificationService {
         'password': password,
       });
 
-      print(response);
-
       return "${response.data['success']}-${response.data['data']['token']}";
     } on DioException catch (error) {
       throw error.message.toString();
@@ -43,17 +46,10 @@ class AuthentificationService {
     }
   }
 
-  Future<String> logout(String token) async {
-    print('logout');
-    print(token);
+  Future<String> logout() async {
     try {
       final response = await dio.post(
         "http://millima.flutterwithakmaljon.uz/api/logout",
-        options: Options(
-          headers: {
-            "Authorization": "Bearer $token",
-          },
-        ),
       );
 
       print(response);

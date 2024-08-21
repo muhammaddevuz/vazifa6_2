@@ -2,20 +2,20 @@ import 'dart:io';
 
 import 'package:equatable/equatable.dart';
 
-sealed class UserEvent extends Equatable {
+sealed class UsersEvent extends Equatable {
   @override
   List<Object?> get props => [];
 }
 
-class GetUserEvent extends UserEvent {}
+class GetUsersEvent extends UsersEvent {}
 
-class UpdateUserEvent extends UserEvent {
+class UpdateUsersEvent extends UsersEvent {
   final String name;
   final String phone;
   final String? email;
   final File? phote;
 
-  UpdateUserEvent({
+  UpdateUsersEvent({
     required this.name,
     required this.phone,
     required this.email,

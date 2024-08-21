@@ -1,41 +1,44 @@
-// ignore_for_file: use_build_context_synchronously
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vazifa/blocs/auth_bloc/auth_bloc.dart';
 import 'package:vazifa/blocs/user_bloc/user_bloc.dart';
-import 'package:vazifa/blocs/user_bloc/user_event.dart';
 import 'package:vazifa/blocs/user_bloc/user_state.dart';
+import 'package:vazifa/ui/screens/profile_screen.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+class UserScreen extends StatefulWidget {
+  const UserScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<UserScreen> createState() => _UserScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
-  @override
-  void initState() {
-    super.initState();
-    context.read<UserBloc>().add(GetUserEvent());
-  }
-
+class _UserScreenState extends State<UserScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return  Scaffold(
       appBar: AppBar(
-        title: const Text('Home'),
+        leading: IconButton(
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ProfileScreen(),
+                  ));
+            },
+            icon: Icon(
+              Icons.person,
+              size: 30,
+            )),
+        title: const Text(
+          'Home',
+          style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+        ),
+        centerTitle: true,
         actions: [
           IconButton(
             icon: const Icon(Icons.logout),
             onPressed: () async {
-              final prefs = await SharedPreferences.getInstance();
-              final String token = prefs.getString("token")!;
-
-              context.read<AuthBloc>().add(LoggedOut(token: token));
-              print(prefs.getString("token"));
+              context.read<AuthBloc>().add(LoggedOut());
               Navigator.pushReplacementNamed(context, '/');
             },
           ),
@@ -53,9 +56,10 @@ class _HomeScreenState extends State<HomeScreen> {
           );
         }
         if (state is UserLoadedState) {
-          return Center(
-            child: Text((state as UserLoadedState).user.toString()),
-          );
+          
+            return Center(
+              child: Text(state.user.name),
+            );
         }
         return Center(
           child: Text("User topilmadi!"),

@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:equatable/equatable.dart';
-import 'package:vazifa/services/athentification_service.dart';
+import 'package:vazifa/data/services/authentification_service.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';
@@ -60,14 +60,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           AuthentificationService();
       final String token =
           await authentificationService.login(event.phone, event.password);
-      print(token);
-      print(token.split("-").first);
       if (token.split("-").first == "true") {
-        print("bloc true");
         await prefs.setString('token', token.split("-").last);
         emit(Authenticated(token: token));
       } else {
-        print("addaffasf");
         emit(
           AuthErrorState(error: "Failed to log in"),
         );
@@ -83,9 +79,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       final prefs = await SharedPreferences.getInstance();
       final AuthentificationService authentificationService =
           AuthentificationService();
-      final String response = await authentificationService.logout(event.token);
+      final String response = await authentificationService.logout();
       if (response == 'success') {
-        print("success");
         await prefs.remove('token');
         emit(UnauthenticatedState());
       } else {

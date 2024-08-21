@@ -1,0 +1,93 @@
+import 'package:dio/dio.dart';
+import 'package:vazifa/data/services/authentification_interseptor.dart';
+
+class GroupService {
+  final Dio dio;
+
+  GroupService() : dio = Dio() {
+    dio.interceptors.add(AuthInterceptor());
+  }
+
+  Future<void> addGroup(
+      String name, int mainTeacherId, int assistantTeacherId) async {
+    try {
+      dio.options.headers['Content-Type'] = 'application/json';
+
+      final data = {
+        "name": name,
+        "main_teacher_id": mainTeacherId,
+        "assistant_teacher_id": assistantTeacherId,
+      };
+
+      final response = await dio.post(
+        'http://millima.flutterwithakmaljon.uz/api/groups',
+        data: data,
+      );
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        print('Group added successfully');
+      } else {
+        print('Failed to add group: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error adding group: $e');
+    }
+  }
+
+  Future<Map<String, dynamic>> getGroups() async {
+    try {
+      final response = await dio.get(
+        'http://millima.flutterwithakmaljon.uz/api/groups',
+      );
+
+      if (response.data['success'] == false) {
+        throw response.data;
+      }
+      return response.data;
+    } catch (e) {
+      print('Error adding group: $e');
+      throw e;
+    }
+  }
+
+  Future<void> updateGroup(int groupId, String name, int mainTeacherId, int assistantTeacherId) async {
+    try {
+      final response = await dio.put(
+        'http://millima.flutterwithakmaljon.uz/api/groups/$groupId',
+        data: {
+          'name': name,
+          'main_teacher_id': mainTeacherId,
+          'assistant_teacher_id': assistantTeacherId,
+        },
+      );
+
+      if (response.statusCode == 200) {
+        print('Group updated successfully');
+      } else {
+        print('Failed to update group: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error: $e');
+    }
+  }
+
+  Future<void> addStudentsToGroup(int groupId, List studentIds) async {
+    try {
+      final response = await dio.post(
+        'http://millima.flutterwithakmaljon.uz/api/groups/$groupId/students',
+        data: {
+          'students': studentIds,
+        },
+      );
+
+      if (response.statusCode == 200) {
+        print('Students added successfully');
+      } else {
+        print('Failed to add students: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error: $e');
+    }
+  }
+
+}
