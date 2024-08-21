@@ -4,6 +4,7 @@ import 'package:vazifa/blocs/auth_bloc/auth_bloc.dart';
 import 'package:vazifa/blocs/user_bloc/user_bloc.dart';
 import 'package:vazifa/ui/screens/home_screen.dart';
 import 'package:vazifa/ui/screens/signin_screen.dart';
+import 'package:vazifa/ui/screens/signup_for_teacher.dart';
 import 'package:vazifa/ui/screens/signup_screen.dart';
 
 void main() {
@@ -36,6 +37,7 @@ class MyApp extends StatelessWidget {
                 },
               ),
           '/signup': (context) => SignUpScreen(),
+          '/signupteacher': (context) => SignupForTeacher(),
           '/home': (context) => HomeScreen(),
         },
       ),

@@ -44,7 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
       body: BlocBuilder<UserBloc, UserState>(builder: (context, state) {
         if (state is UserLoadingState) {
           return Center(
-            child: LinearProgressIndicator(),
+            child: CircularProgressIndicator(),
           );
         }
         if (state is UserErrorState) {
@@ -58,7 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
           );
         }
         return Center(
-          child: Text("User topilmadi :("),
+          child: Text("User topilmadi!"),
         );
       }),
     );

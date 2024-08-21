@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vazifa/blocs/auth_bloc/auth_bloc.dart';
-import 'package:vazifa/ui/screens/home_screen.dart';
 import 'package:vazifa/ui/screens/signin_screen.dart';
 
-class SignUpScreen extends StatefulWidget {
-  SignUpScreen({super.key});
+class SignupForTeacher extends StatefulWidget {
+  SignupForTeacher({super.key});
 
   @override
-  State<SignUpScreen> createState() => _SignUpScreenState();
+  State<SignupForTeacher> createState() => _SignUpScreenState();
 }
 
-class _SignUpScreenState extends State<SignUpScreen> {
+class _SignUpScreenState extends State<SignupForTeacher> {
   final TextEditingController _nameController = TextEditingController();
 
   final TextEditingController _phoneController = TextEditingController();
@@ -21,7 +20,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController _confirmPasswordController =
       TextEditingController();
 
-  int? _selectedRole;
+  int _selectedRole=2;
 
   @override
   Widget build(BuildContext context) {
@@ -94,6 +93,27 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   const SizedBox(
                     height: 15,
                   ),
+                  DropdownButtonFormField<int>(
+                    decoration: InputDecoration(
+                      labelText: "Select Role (Optional)",
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                    ),
+                    value: _selectedRole,
+                    items: const [
+                      DropdownMenuItem(value: 2, child: Text("Teacher")),
+                      DropdownMenuItem(value: 3, child: Text("Admin")),
+                    ],
+                    onChanged: (value) {
+                      setState(() {
+                        _selectedRole = value!;
+                      });
+                    },
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
                   TextField(
                     controller: _phoneController,
                     decoration: InputDecoration(
@@ -157,7 +177,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   Register(
                                     name: _nameController.text,
                                     phone: _phoneController.text,
-                                    role: 1,
+                                    role: _selectedRole,
                                     password: _passwordController.text,
                                     passwordConfirmation:
                                         _confirmPasswordController.text,
@@ -217,20 +237,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     },
                     child: Text(
                       "Alredady Have an Account?",
-                      style: TextStyle(
-                        color: Colors.blue,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 10),
-                  InkWell(
-                    onTap: () {
-                      Navigator.pushReplacementNamed(context, '/signupteacher');
-                    },
-                    child: Text(
-                      "Teacher and Admin",
                       style: TextStyle(
                         color: Colors.blue,
                         fontSize: 16,
