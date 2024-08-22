@@ -28,6 +28,7 @@ class GroupService {
         print('Group added successfully');
       } else {
         print('Failed to add group: ${response.statusCode}');
+        throw 'Failed to add group: ${response.statusCode}';
       }
     } catch (e) {
       print('Error adding group: $e');
@@ -49,8 +50,24 @@ class GroupService {
       throw e;
     }
   }
+  Future<Map<String, dynamic>> getStudentGroups() async {
+    try {
+      final response = await dio.get(
+        'http://millima.flutterwithakmaljon.uz/api/student/groups',
+      );
 
-  Future<void> updateGroup(int groupId, String name, int mainTeacherId, int assistantTeacherId) async {
+      if (response.data['success'] == false) {
+        throw response.data;
+      }
+      return response.data;
+    } catch (e) {
+      print('Error adding group: $e');
+      throw e;
+    }
+  }
+
+  Future<void> updateGroup(int groupId, String name, int mainTeacherId,
+      int assistantTeacherId) async {
     try {
       final response = await dio.put(
         'http://millima.flutterwithakmaljon.uz/api/groups/$groupId',
@@ -90,4 +107,5 @@ class GroupService {
     }
   }
 
+  
 }

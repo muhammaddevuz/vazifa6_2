@@ -1,8 +1,11 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vazifa/blocs/group_bloc/group_bloc.dart';
 import 'package:vazifa/blocs/group_bloc/group_event.dart';
+import 'package:vazifa/data/model/user_model.dart';
 import 'package:vazifa/ui/screens/role/admin_screen.dart';
+import 'package:vazifa/ui/widget/choose_teacher.dart';
 import 'package:vazifa/ui/widget/custom_drawer_for_admin.dart';
 
 class AddGroup extends StatefulWidget {
@@ -14,8 +17,8 @@ class AddGroup extends StatefulWidget {
 
 class _AddGroupState extends State<AddGroup> {
   TextEditingController nameEditingController = TextEditingController();
-  TextEditingController mainTeacherIdController = TextEditingController();
-  TextEditingController asistantTeacherIdController = TextEditingController();
+  UserModel? mainTeacher;
+  UserModel? asistantTeacher;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,31 +43,64 @@ class _AddGroupState extends State<AddGroup> {
                       borderRadius: BorderRadius.circular(25))),
             ),
             SizedBox(height: 15),
-            TextField(
-              keyboardType: TextInputType.number,
-              controller: mainTeacherIdController,
-              decoration: InputDecoration(
-                  labelText: "Main Teacher Id",
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(25))),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    Text(
+                      "Main Teacher: ",
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+                    ),
+                    Text(
+                      "${mainTeacher != null ? mainTeacher!.name : ""}",
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+                    ),
+                  ],
+                ),
+                IconButton(
+                    onPressed: () async {
+                      mainTeacher = await chooseTeacher(context);
+                      setState(() {});
+                    },
+                    icon: Icon(CupertinoIcons.person_add_solid))
+              ],
             ),
             SizedBox(height: 15),
-            TextField(
-              keyboardType: TextInputType.number,
-              controller: asistantTeacherIdController,
-              decoration: InputDecoration(
-                  labelText: "Asistant Teacher Id",
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(25))),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    Text(
+                      "Asistant Teacher: ",
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+                    ),
+                    Text(
+                      "${asistantTeacher != null ? asistantTeacher!.name : ""}",
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+                    ),
+                  ],
+                ),
+                IconButton(
+                    onPressed: () async {
+                      asistantTeacher = await chooseTeacher(context);
+                      setState(() {});
+                    },
+                    icon: Icon(CupertinoIcons.person_add_solid))
+              ],
             ),
             SizedBox(height: 15),
             ElevatedButton(
-                onPressed: ()  {
-                   context.read<GroupBloc>().add(AddGroupEvent(
+                onPressed: () {
+                  context.read<GroupBloc>().add(AddGroupEvent(
                       name: nameEditingController.text,
-                      main_teacher_id: int.parse(mainTeacherIdController.text),
-                      assistant_teacher_id:
-                          int.parse(asistantTeacherIdController.text)));
+                      main_teacher_id: mainTeacher!.id,
+                      assistant_teacher_id: asistantTeacher!.id));
                   Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(

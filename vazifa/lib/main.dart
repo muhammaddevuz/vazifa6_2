@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vazifa/blocs/auth_bloc/auth_bloc.dart';
 import 'package:vazifa/blocs/group_bloc/group_bloc.dart';
-import 'package:vazifa/blocs/user_bloc/user_bloc.dart';
+import 'package:vazifa/blocs/current_user_bloc/current_user_bloc.dart';
 import 'package:vazifa/blocs/users_bloc/users_bloc.dart';
 import 'package:vazifa/ui/screens/managment_screen.dart';
 import 'package:vazifa/ui/screens/auth_screen/signin_screen.dart';
@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => AuthBloc()..add(AppStarted())),
-        BlocProvider(create: (context) => UserBloc()),
+        BlocProvider(create: (context) => CurrentUserBloc()),
         BlocProvider(create: (context) => UsersBloc()),
         BlocProvider(create: (context) => GroupBloc())
       ],

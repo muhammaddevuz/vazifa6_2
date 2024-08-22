@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vazifa/blocs/auth_bloc/auth_bloc.dart';
-import 'package:vazifa/blocs/user_bloc/user_bloc.dart';
-import 'package:vazifa/blocs/user_bloc/user_state.dart';
+import 'package:vazifa/blocs/group_bloc/group_bloc.dart';
+import 'package:vazifa/blocs/group_bloc/group_event.dart';
+import 'package:vazifa/blocs/group_bloc/group_state.dart';
 import 'package:vazifa/ui/screens/profile_screen.dart';
+import 'package:vazifa/ui/screens/student_group_information.dart';
 
 class UserScreen extends StatefulWidget {
   const UserScreen({super.key});
@@ -14,8 +16,14 @@ class UserScreen extends StatefulWidget {
 
 class _UserScreenState extends State<UserScreen> {
   @override
+  void initState() {
+    super.initState();
+    context.read<GroupBloc>().add(GetStudentGroupsEvent());
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return  Scaffold(
+    return Scaffold(
       appBar: AppBar(
         leading: IconButton(
             onPressed: () {
@@ -44,25 +52,76 @@ class _UserScreenState extends State<UserScreen> {
           ),
         ],
       ),
-      body: BlocBuilder<UserBloc, UserState>(builder: (context, state) {
-        if (state is UserLoadingState) {
+      body: BlocBuilder<GroupBloc, GroupState>(builder: (context, state) {
+        if (state is GroupLoadingState) {
           return Center(
             child: CircularProgressIndicator(),
           );
         }
-        if (state is UserErrorState) {
+        if (state is GroupErrorState) {
           return Center(
             child: Text(state.error),
           );
         }
-        if (state is UserLoadedState) {
-          
-            return Center(
-              child: Text(state.user.name),
-            );
+        if (state is GroupLoadedState) {
+          return ListView.builder(
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            itemCount: state.groups.length,
+            itemBuilder: (context, index) {
+              return Column(
+                children: [
+                  InkWell(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => StudentGroupInformation(
+                              groupModel: state.groups[index],
+                            ),
+                          ));
+                    },
+                    child: Container(
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: Colors.blue),
+                      padding: EdgeInsets.all(10),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Group Name: ${state.groups[index].name}",
+                            style: TextStyle(
+                                fontSize: 25,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.white),
+                          ),
+                          Text(
+                            "Main Teacher Id: ${state.groups[index].main_teacher.id}",
+                            style: TextStyle(
+                                fontSize: 25,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.white),
+                          ),
+                          Text(
+                            "Asistant Teacher id: ${state.groups[index].assistant_teacher.id}",
+                            style: TextStyle(
+                                fontSize: 25,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.white),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 15),
+                ],
+              );
+            },
+          );
         }
         return Center(
-          child: Text("User topilmadi!"),
+          child: Text("Grouplar topilmadi!"),
         );
       }),
     );

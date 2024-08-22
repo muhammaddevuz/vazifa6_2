@@ -1,15 +1,17 @@
+import 'package:vazifa/data/model/user_model.dart';
+
 class GroupModel {
   int id;
   String name;
-  int main_teacher_id;
-  int assistant_teacher_id;
+  UserModel main_teacher;
+  UserModel assistant_teacher;
   List students;
 
   GroupModel({
     required this.id,
     required this.name,
-    required this.main_teacher_id,
-    required this.assistant_teacher_id,
-    required this.students,
-  });
+    required this.main_teacher,
+    required this.assistant_teacher,
+    List? students,
+  }): this.students = students ?? [];
 }

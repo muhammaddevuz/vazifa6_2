@@ -1,9 +1,12 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vazifa/blocs/group_bloc/group_bloc.dart';
 import 'package:vazifa/blocs/group_bloc/group_event.dart';
 import 'package:vazifa/data/model/group_model.dart';
+import 'package:vazifa/data/model/user_model.dart';
 import 'package:vazifa/ui/screens/role/admin_screen.dart';
+import 'package:vazifa/ui/widget/choose_teacher.dart';
 
 class UpdateGroup extends StatefulWidget {
   final GroupModel group;
@@ -15,15 +18,15 @@ class UpdateGroup extends StatefulWidget {
 
 class _UpdateGroupState extends State<UpdateGroup> {
   TextEditingController nameEditingController = TextEditingController();
-  TextEditingController mainTeacherIdController = TextEditingController();
-  TextEditingController asistantTeacherIdController = TextEditingController();
+  UserModel? mainTeacher;
+  UserModel? asistantTeacher;
+
   @override
   void initState() {
     super.initState();
     nameEditingController.text = widget.group.name;
-    mainTeacherIdController.text = widget.group.main_teacher_id.toString();
-    asistantTeacherIdController.text =
-        widget.group.assistant_teacher_id.toString();
+    mainTeacher = widget.group.main_teacher;
+    asistantTeacher = widget.group.assistant_teacher;
   }
 
   @override
@@ -49,22 +52,56 @@ class _UpdateGroupState extends State<UpdateGroup> {
                       borderRadius: BorderRadius.circular(25))),
             ),
             SizedBox(height: 15),
-            TextField(
-              keyboardType: TextInputType.number,
-              controller: mainTeacherIdController,
-              decoration: InputDecoration(
-                  labelText: "Main Teacher Id",
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(25))),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    Text(
+                      "Main Teacher: ",
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+                    ),
+                    Text(
+                      "${mainTeacher != null ? mainTeacher!.name : ""}",
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+                    ),
+                  ],
+                ),
+                IconButton(
+                    onPressed: () async {
+                      mainTeacher = await chooseTeacher(context);
+                      setState(() {});
+                    },
+                    icon: Icon(CupertinoIcons.person_add_solid))
+              ],
             ),
             SizedBox(height: 15),
-            TextField(
-              keyboardType: TextInputType.number,
-              controller: asistantTeacherIdController,
-              decoration: InputDecoration(
-                  labelText: "Asistant Teacher Id",
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(25))),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    Text(
+                      "Asistant Teacher: ",
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+                    ),
+                    Text(
+                      "${asistantTeacher != null ? asistantTeacher!.name : ""}",
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+                    ),
+                  ],
+                ),
+                IconButton(
+                    onPressed: () async {
+                      asistantTeacher = await chooseTeacher(context);
+                      setState(() {});
+                    },
+                    icon: Icon(CupertinoIcons.person_add_solid))
+              ],
             ),
             SizedBox(height: 15),
             ElevatedButton(
@@ -72,9 +109,8 @@ class _UpdateGroupState extends State<UpdateGroup> {
                   context.read<GroupBloc>().add(UpdateGroupEvent(
                       groupId: widget.group.id,
                       name: nameEditingController.text,
-                      main_teacher_id: int.parse(mainTeacherIdController.text),
-                      assistant_teacher_id:
-                          int.parse(asistantTeacherIdController.text)));
+                      main_teacher_id: mainTeacher!.id,
+                      assistant_teacher_id: asistantTeacher!.id));
                   Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(

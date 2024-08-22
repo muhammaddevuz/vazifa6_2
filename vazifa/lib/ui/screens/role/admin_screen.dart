@@ -90,7 +90,7 @@ class _AdminScreenState extends State<AdminScreen> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                "Main Teacher Id: ${state.groups[index].main_teacher_id}",
+                                "Main Teacher Id: ${state.groups[index].main_teacher.id}",
                                 style: TextStyle(
                                     fontSize: 25,
                                     fontWeight: FontWeight.w500,
@@ -116,7 +116,7 @@ class _AdminScreenState extends State<AdminScreen> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                "Asistant Teacher id: ${state.groups[index].assistant_teacher_id}",
+                                "Asistant Teacher id: ${state.groups[index].assistant_teacher.id}",
                                 style: TextStyle(
                                     fontSize: 25,
                                     fontWeight: FontWeight.w500,

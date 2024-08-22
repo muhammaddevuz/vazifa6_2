@@ -44,12 +44,6 @@ class _GroupInformationScreenState extends State<GroupInformationScreen> {
             );
             students.add(matchedModel);
           }
-          UserModel mainTeacher = state.users.firstWhere(
-            (element) => element.id == widget.groupModel.main_teacher_id,
-          );
-          UserModel asistantTeacher = state.users.firstWhere(
-            (element) => element.id == widget.groupModel.assistant_teacher_id,
-          );
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -61,68 +55,73 @@ class _GroupInformationScreenState extends State<GroupInformationScreen> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
+                padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      "Teachers",
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
-                    ),
-                    ListTile(
-                      title: Text(
-                        mainTeacher.name,
-                        style: TextStyle(fontSize: 20),
-                      ),
-                      subtitle: Text(mainTeacher.phone),
-                      leading: CircleAvatar(
-                        child: Container(
-                          decoration: BoxDecoration(
-                              shape: BoxShape.circle, color: Colors.grey),
-                          clipBehavior: Clip.hardEdge,
-                          child: mainTeacher.photo == null
-                              ? Icon(
-                                  Icons.person,
-                                  size: 40,
-                                )
-                              : Image.network(
-                                  "http://millima.flutterwithakmaljon.uz/storage/avatars/${mainTeacher.photo}"),
-                        ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10),
+                      child: Text(
+                        "Teachers",
+                        style: TextStyle(
+                            fontSize: 25, fontWeight: FontWeight.w600),
                       ),
                     ),
                     ListTile(
                       title: Text(
-                        asistantTeacher.name,
+                        widget.groupModel.main_teacher.name,
                         style: TextStyle(fontSize: 20),
                       ),
-                      subtitle: Text(asistantTeacher.phone),
-                      leading: CircleAvatar(
-                        child: Container(
-                          decoration: BoxDecoration(
-                              shape: BoxShape.circle, color: Colors.grey),
-                          clipBehavior: Clip.hardEdge,
-                          child: asistantTeacher.photo == null
-                              ? Icon(
-                                  Icons.person,
-                                  size: 40,
-                                )
-                              : Image.network(
-                                  "http://millima.flutterwithakmaljon.uz/storage/avatars/${asistantTeacher.photo}"),
-                        ),
+                      subtitle: Text(widget.groupModel.main_teacher.phone),
+                      leading: Container(
+                        width: 80,
+                        decoration: BoxDecoration(
+                            shape: BoxShape.circle, color: Colors.grey),
+                        clipBehavior: Clip.hardEdge,
+                        child: widget.groupModel.main_teacher.photo == null
+                            ? Icon(
+                                Icons.person,
+                                size: 50,
+                              )
+                            : Image.network(
+                                "http://millima.flutterwithakmaljon.uz/storage/avatars/${widget.groupModel.main_teacher.photo}"),
                       ),
                     ),
-                    Text(
-                      "Students",
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+                    ListTile(
+                      title: Text(
+                        widget.groupModel.assistant_teacher.name,
+                        style: TextStyle(fontSize: 20),
+                      ),
+                      subtitle: Text(widget.groupModel.assistant_teacher.phone),
+                      leading: Container(
+                        width: 80,
+                        decoration: BoxDecoration(
+                            shape: BoxShape.circle, color: Colors.grey),
+                        clipBehavior: Clip.hardEdge,
+                        child: widget.groupModel.assistant_teacher.photo == null
+                            ? Icon(
+                                Icons.person,
+                                size: 50,
+                              )
+                            : Image.network(
+                                "http://millima.flutterwithakmaljon.uz/storage/avatars/${widget.groupModel.assistant_teacher.photo}"),
+                      ),
+                    ),
+                    SizedBox(height: 20),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10),
+                      child: Text(
+                        "Students",
+                        style: TextStyle(
+                            fontSize: 25, fontWeight: FontWeight.w600),
+                      ),
                     ),
                   ],
                 ),
               ),
               Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: ListView.builder(
                     itemCount: students.length,
                     itemBuilder: (context, index) {
@@ -132,19 +131,18 @@ class _GroupInformationScreenState extends State<GroupInformationScreen> {
                           style: TextStyle(fontSize: 20),
                         ),
                         subtitle: Text(students[index].phone),
-                        leading: CircleAvatar(
-                          child: Container(
-                            decoration: BoxDecoration(
-                                shape: BoxShape.circle, color: Colors.grey),
-                            clipBehavior: Clip.hardEdge,
-                            child: students[index].photo == null
-                                ? Icon(
-                                    Icons.person,
-                                    size: 40,
-                                  )
-                                : Image.network(
-                                    "http://millima.flutterwithakmaljon.uz/storage/avatars/${students[index].photo}"),
-                          ),
+                        leading: Container(
+                          width: 80,
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle, color: Colors.grey),
+                          clipBehavior: Clip.hardEdge,
+                          child: students[index].photo == null
+                              ? Icon(
+                                  Icons.person,
+                                  size: 50,
+                                )
+                              : Image.network(
+                                  "http://millima.flutterwithakmaljon.uz/storage/avatars/${students[index].photo}"),
                         ),
                       );
                     },

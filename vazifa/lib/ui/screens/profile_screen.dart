@@ -3,9 +3,9 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:vazifa/blocs/user_bloc/user_bloc.dart';
-import 'package:vazifa/blocs/user_bloc/user_event.dart';
-import 'package:vazifa/blocs/user_bloc/user_state.dart';
+import 'package:vazifa/blocs/current_user_bloc/current_user_bloc.dart';
+import 'package:vazifa/blocs/current_user_bloc/current_user_event.dart';
+import 'package:vazifa/blocs/current_user_bloc/current_user_state.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -55,12 +55,12 @@ class _UserProfileScreenState extends State<ProfileScreen> {
         ),
         centerTitle: true,
       ),
-      body: BlocBuilder<UserBloc, UserState>(builder: (context, state) {
-        if (state is UserLoadingState) {
+      body: BlocBuilder<CurrentUserBloc, CurrentUserState>(builder: (context, state) {
+        if (state is CurrentUserLoadingState) {
           return Center(
             child: CircularProgressIndicator(),
           );
-        } else if (state is UserLoadedState) {
+        } else if (state is CurrentUserLoadedState) {
           nameEditingController.text = state.user.name;
           phoneEditingController.text = state.user.phone;
           emailEditingController.text = state.user.email ?? "";
@@ -139,7 +139,7 @@ class _UserProfileScreenState extends State<ProfileScreen> {
                   SizedBox(height: 15),
                   ElevatedButton(
                       onPressed: () {
-                        context.read<UserBloc>().add(UpdateUserEvent(
+                        context.read<CurrentUserBloc>().add(UpdateCurrentUserEvent(
                               name: nameEditingController.text,
                               phone: phoneEditingController.text,
                               email: emailEditingController.text,
@@ -160,7 +160,7 @@ class _UserProfileScreenState extends State<ProfileScreen> {
               ),
             ),
           );
-        } else if (state is UserErrorState) {
+        } else if (state is CurrentUserErrorState) {
           return Center(
             child: Text(state.error),
           );
