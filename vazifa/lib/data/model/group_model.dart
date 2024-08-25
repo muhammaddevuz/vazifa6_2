@@ -13,5 +13,20 @@ class GroupModel {
     required this.main_teacher,
     required this.assistant_teacher,
     List<UserModel>? students,
-  }): this.students = students ?? [];
+  }) : students = students ?? [];
+
+  // Factory constructor for creating a GroupModel from a map
+  factory GroupModel.fromMap(Map<String, dynamic> map) {
+    List<UserModel> students = (map['students'] as List).map((student) {
+      return UserModel.fromMap(student);
+    }).toList();
+
+    return GroupModel(
+      id: map['id'],
+      name: map['name'],
+      main_teacher: UserModel.fromMap(map['main_teacher']),
+      assistant_teacher: UserModel.fromMap(map['assistant_teacher']),
+      students: students,
+    );
+  }
 }

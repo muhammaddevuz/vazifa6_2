@@ -1,0 +1,87 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:vazifa/blocs/timetable_bloc/timetable_bloc.dart';
+import 'package:vazifa/blocs/timetable_bloc/timetable_event.dart';
+import 'package:vazifa/blocs/timetable_bloc/timetable_state.dart';
+import 'package:vazifa/data/model/group_model.dart';
+import 'package:vazifa/data/model/week_days.dart';
+
+class ShowGroupTimetable extends StatefulWidget {
+  final GroupModel groupModel;
+  const ShowGroupTimetable({super.key, required this.groupModel});
+
+  @override
+  State<ShowGroupTimetable> createState() => _ShowGroupTimetableState();
+}
+
+class _ShowGroupTimetableState extends State<ShowGroupTimetable> {
+  @override
+  void initState() {
+    super.initState();
+    context
+        .read<TimetableBloc>()
+        .add(GetTimeTablesEvent(group_id: widget.groupModel.id));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          "${widget.groupModel.name} TimeTable",
+          style: TextStyle(fontSize: 25, fontWeight: FontWeight.w600),
+        ),
+        centerTitle: true,
+      ),
+      body: BlocBuilder<TimetableBloc, TimeTableState>(
+        builder: (context, state) {
+          if (state is TimeTableLoadingState) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          if (state is TimeTableErrorState) {
+            return Center(
+              child: Text(state.error),
+            );
+          }
+          if (state is TimeTableLoadedState) {
+            return ListView(
+              padding: EdgeInsets.all(8.0),
+              children: state.TimeTables.week_days.entries.map((entry) {
+                String weekDay = entry.key;
+                List<WeekDays> timetable = entry.value;
+
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      weekDay,
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.blue,
+                      ),
+                    ),
+                    ...timetable.map((day) {
+                      return Card(
+                        child: ListTile(
+                          title: Text(day.room),
+                          subtitle: Text("${day.start_time} - ${day.end_time}"),
+                        ),
+                      );
+                    }).toList(),
+                    SizedBox(height: 20),
+                  ],
+                );
+              }).toList(),
+            );
+          }
+          return Center(
+            child: Text("Timetable topilmadi!"),
+          );
+        },
+      ),
+    );
+  }
+}

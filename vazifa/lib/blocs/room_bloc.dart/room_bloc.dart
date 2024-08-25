@@ -20,15 +20,8 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
       final response = await roomService.getRooms();
       List<RoomModel> rooms = [];
 
-
-      response['data'] .forEach((room) {
-        rooms.add(
-          RoomModel(
-              id: room['id'],
-              name: room['name'],
-              description: room['description'],
-              capacity: room['capacity']),
-        );
+      response['data'].forEach((value) {
+        rooms.add(RoomModel.fromMap(value));
       });
 
       emit(RoomLoadedState(rooms: rooms));
@@ -45,13 +38,9 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
           event.day_id, event.start_time, event.end_time);
       List<RoomModel> rooms = [];
 
-      rooms.add(
-        RoomModel(
-            id: response['data']['id'],
-            name: response['data']['name'],
-            description: response['data']['description'],
-            capacity: response['data']['capacity']),
-      );
+      response['data'].forEach((value) {
+        rooms.add(RoomModel.fromMap(value));
+      });
 
       emit(RoomLoadedState(rooms: rooms));
     } catch (e) {

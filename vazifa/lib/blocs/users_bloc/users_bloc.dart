@@ -16,17 +16,10 @@ class UsersBloc extends Bloc<UsersEvent, UsersState> {
       final Map<String, dynamic> response = await userService.getUsers();
       List<UserModel> users = [];
 
-      response['data'].forEach(
-        (value) {
-          users.add(UserModel(
-              id: value['id'],
-              name: value['name'],
-              email: value['email'],
-              phone: value['phone'],
-              photo: value['photo'],
-              role: value['role_id']));
-        },
-      );
+      response['data'].forEach((value) {
+        users.add(UserModel.fromMap(value));
+      });
+
       emit(UsersLoadedState(users: users));
     } catch (e) {
       emit(UsersErrorState(error: e.toString()));

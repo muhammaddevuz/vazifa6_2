@@ -2,7 +2,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vazifa/blocs/group_bloc/group_event.dart';
 import 'package:vazifa/blocs/group_bloc/group_state.dart';
 import 'package:vazifa/data/model/group_model.dart';
-import 'package:vazifa/data/model/user_model.dart';
 import 'package:vazifa/data/services/group_service.dart';
 
 class GroupBloc extends Bloc<GroupEvent, GroupState> {
@@ -22,44 +21,10 @@ class GroupBloc extends Bloc<GroupEvent, GroupState> {
       final response = await groupService.getGroups();
       List<GroupModel> groups = [];
 
-      response['data'].forEach(
-        (value) {
-          List<UserModel> students = (value['students'] as List).map((student) {
-            return UserModel(
-              id: student['id'],
-              name: student['name'],
-              email: student['email'],
-              phone: student['phone'],
-              photo: student['photo'],
-              role: student['role_id'],
-            );
-          }).toList();
+      response['data'].forEach((value) {
+        groups.add(GroupModel.fromMap(value));
+      });
 
-          groups.add(
-            GroupModel(
-              id: value['id'],
-              name: value['name'],
-              main_teacher: UserModel(
-                id: value['main_teacher']['id'],
-                name: value['main_teacher']['name'],
-                email: value['main_teacher']['email'],
-                phone: value['main_teacher']['phone'],
-                photo: value['main_teacher']['photo'],
-                role: value['main_teacher']['role_id'],
-              ),
-              assistant_teacher: UserModel(
-                id: value['assistant_teacher']['id'],
-                name: value['assistant_teacher']['name'],
-                email: value['assistant_teacher']['email'],
-                phone: value['assistant_teacher']['phone'],
-                photo: value['assistant_teacher']['photo'],
-                role: value['assistant_teacher']['role_id'],
-              ),
-              students: students,
-            ),
-          );
-        },
-      );
       emit(GroupLoadedState(groups: groups));
     } catch (e) {
       emit(GroupErrorState(error: e.toString()));
@@ -73,44 +38,10 @@ class GroupBloc extends Bloc<GroupEvent, GroupState> {
       final response = await groupService.getStudentGroups();
       List<GroupModel> groups = [];
 
-      response['data'].forEach(
-        (value) {
-          List<UserModel> students = (value['students'] as List).map((student) {
-            return UserModel(
-              id: student['id'],
-              name: student['name'],
-              email: student['email'],
-              phone: student['phone'],
-              photo: student['photo'],
-              role: student['role_id'],
-            );
-          }).toList();
+      response['data'].forEach((value) {
+        groups.add(GroupModel.fromMap(value));
+      });
 
-          groups.add(
-            GroupModel(
-              id: value['id'],
-              name: value['name'],
-              main_teacher: UserModel(
-                id: value['main_teacher']['id'],
-                name: value['main_teacher']['name'],
-                email: value['main_teacher']['email'],
-                phone: value['main_teacher']['phone'],
-                photo: value['main_teacher']['photo'],
-                role: value['main_teacher']['role_id'],
-              ),
-              assistant_teacher: UserModel(
-                id: value['assistant_teacher']['id'],
-                name: value['assistant_teacher']['name'],
-                email: value['assistant_teacher']['email'],
-                phone: value['assistant_teacher']['phone'],
-                photo: value['assistant_teacher']['photo'],
-                role: value['assistant_teacher']['role_id'],
-              ),
-              students: students,
-            ),
-          );
-        },
-      );
       emit(GroupLoadedState(groups: groups));
     } catch (e) {
       emit(GroupErrorState(error: e.toString()));

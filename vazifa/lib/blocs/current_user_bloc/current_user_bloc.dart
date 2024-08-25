@@ -15,19 +15,13 @@ class CurrentUserBloc extends Bloc<CurrentUserEvent, CurrentUserState> {
     final UserService userService = UserService();
     try {
       final Map<String, dynamic> response = await userService.getUser();
-      UserModel userModel = UserModel(
-          id: response['data']['id'],
-          name: response['data']['name'],
-          email: response['data']['email'],
-          phone: response['data']['phone'],
-          photo: response['data']['photo'],
-          role: response['data']['role_id']);
+
+      UserModel userModel = UserModel.fromMap(response['data']);
       emit(CurrentUserLoadedState(user: userModel));
     } catch (e) {
       emit(CurrentUserErrorState(error: e.toString()));
     }
   }
-
 
   Future<void> _updateUser(UpdateCurrentUserEvent event, emit) async {
     emit(CurrentUserLoadingState());

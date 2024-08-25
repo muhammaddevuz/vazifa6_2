@@ -5,6 +5,7 @@ import 'package:vazifa/blocs/room_bloc.dart/room_event.dart';
 import 'package:vazifa/blocs/room_bloc.dart/room_state.dart';
 import 'package:vazifa/ui/screens/admin_drawer/manage_room.dart';
 import 'package:vazifa/ui/widget/custom_drawer_for_admin.dart';
+import 'package:vazifa/ui/widget/room_item.dart';
 
 class RoomScreen extends StatefulWidget {
   const RoomScreen({super.key});
@@ -47,95 +48,12 @@ class _RoomScreenState extends State<RoomScreen> {
             padding: EdgeInsets.symmetric(horizontal: 20),
             itemCount: state.rooms.length,
             itemBuilder: (context, index) {
-              return Column(
-                children: [
-                  InkWell(
-                    onTap: () {
-                      // Navigator.push(
-                      //     context,
-                      //     MaterialPageRoute(
-                      //       builder: (context) => GroupInformationScreen(
-                      //         groupModel: state.rooms[index],
-                      //       ),
-                      //     ));
-                    },
-                    child: Container(
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: Colors.blue),
-                      padding: EdgeInsets.all(10),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Room Name: ${state.rooms[index].name}",
-                            style: TextStyle(
-                                fontSize: 25,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.white),
-                          ),
-                          Text(
-                            "Descripstion: ${state.rooms[index].description}",
-                            style: TextStyle(
-                                fontSize: 25,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.white),
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                "Capacity: ${state.rooms[index].capacity}",
-                                style: TextStyle(
-                                    fontSize: 25,
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.white),
-                              ),
-                              Row(
-                                children: [
-                                  IconButton(
-                                      onPressed: () {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) => ManageRoom(
-                                                roomModel: state.rooms[index],
-                                              ),
-                                            ));
-                                      },
-                                      icon: Icon(
-                                        Icons.edit,
-                                        size: 30,
-                                        color: Colors.white,
-                                      )),
-                                  IconButton(
-                                      onPressed: () {
-                                        context.read<RoomBloc>().add(
-                                            DeleteRoomEvent(
-                                                roomId: state.rooms[index].id));
-                                      },
-                                      icon: Icon(
-                                        Icons.delete,
-                                        size: 30,
-                                        color: Colors.red,
-                                      )),
-                                ],
-                              )
-                            ],
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 15),
-                ],
-              );
+              return RoomItem(roomModel: state.rooms[index]);
             },
           );
         }
         return Center(
-          child: Text("Grouplar topilmadi!"),
+          child: Text("Roomlar topilmadi!"),
         );
       }),
       floatingActionButton: FloatingActionButton(
