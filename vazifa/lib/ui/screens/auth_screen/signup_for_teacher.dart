@@ -12,15 +12,12 @@ class SignupForTeacher extends StatefulWidget {
 
 class _SignUpScreenState extends State<SignupForTeacher> {
   final TextEditingController _nameController = TextEditingController();
-
   final TextEditingController _phoneController = TextEditingController();
-
   final TextEditingController _passwordController = TextEditingController();
-
   final TextEditingController _confirmPasswordController =
       TextEditingController();
 
-  int _selectedRole=2;
+  int _selectedRole = 2;
 
   @override
   Widget build(BuildContext context) {
@@ -47,9 +44,7 @@ class _SignUpScreenState extends State<SignupForTeacher> {
                     fit: BoxFit.cover,
                   ),
                 ),
-                const SizedBox(
-                  width: 5,
-                ),
+                const SizedBox(width: 5),
                 const Text(
                   "WorkRoom",
                   style: TextStyle(
@@ -60,9 +55,7 @@ class _SignUpScreenState extends State<SignupForTeacher> {
                 ),
               ],
             ),
-            const SizedBox(
-              height: 20,
-            ),
+            const SizedBox(height: 20),
             Container(
               decoration: BoxDecoration(
                 color: Colors.white,
@@ -72,15 +65,13 @@ class _SignUpScreenState extends State<SignupForTeacher> {
               child: Column(
                 children: [
                   const Text(
-                    "Sign Up To Workroom",
+                    "Sign Up As Teacher/Admin",
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  const SizedBox(
-                    height: 25,
-                  ),
+                  const SizedBox(height: 25),
                   TextField(
                     controller: _nameController,
                     decoration: InputDecoration(
@@ -90,30 +81,7 @@ class _SignUpScreenState extends State<SignupForTeacher> {
                       ),
                     ),
                   ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  DropdownButtonFormField<int>(
-                    decoration: InputDecoration(
-                      labelText: "Select Role (Optional)",
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                    ),
-                    value: _selectedRole,
-                    items: const [
-                      DropdownMenuItem(value: 2, child: Text("Teacher")),
-                      DropdownMenuItem(value: 3, child: Text("Admin")),
-                    ],
-                    onChanged: (value) {
-                      setState(() {
-                        _selectedRole = value!;
-                      });
-                    },
-                  ),
-                  SizedBox(
-                    height: 15,
-                  ),
+                  const SizedBox(height: 15),
                   TextField(
                     controller: _phoneController,
                     decoration: InputDecoration(
@@ -123,9 +91,7 @@ class _SignUpScreenState extends State<SignupForTeacher> {
                       ),
                     ),
                   ),
-                  const SizedBox(
-                    height: 15,
-                  ),
+                  const SizedBox(height: 15),
                   TextField(
                     controller: _passwordController,
                     decoration: InputDecoration(
@@ -136,9 +102,7 @@ class _SignUpScreenState extends State<SignupForTeacher> {
                     ),
                     obscureText: true,
                   ),
-                  const SizedBox(
-                    height: 15,
-                  ),
+                  const SizedBox(height: 15),
                   TextField(
                     controller: _confirmPasswordController,
                     decoration: InputDecoration(
@@ -149,8 +113,38 @@ class _SignUpScreenState extends State<SignupForTeacher> {
                     ),
                     obscureText: true,
                   ),
-                  const SizedBox(
-                    height: 15,
+                  const SizedBox(height: 15),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: ListTile(
+                          title: const Text("Teacher"),
+                          leading: Radio<int>(
+                            value: 2,
+                            groupValue: _selectedRole,
+                            onChanged: (value) {
+                              setState(() {
+                                _selectedRole = value!;
+                              });
+                            },
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: ListTile(
+                          title: const Text("Admin"),
+                          leading: Radio<int>(
+                            value: 3,
+                            groupValue: _selectedRole,
+                            onChanged: (value) {
+                              setState(() {
+                                _selectedRole = value!;
+                              });
+                            },
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                   const SizedBox(height: 16),
                   BlocConsumer<AuthBloc, AuthState>(
@@ -161,8 +155,9 @@ class _SignUpScreenState extends State<SignupForTeacher> {
                           width: double.infinity,
                           padding: const EdgeInsets.all(15),
                           decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                              color: Colors.blue),
+                            borderRadius: BorderRadius.circular(15),
+                            color: Colors.blue,
+                          ),
                           child: const Center(
                             child: CircularProgressIndicator(),
                           ),
@@ -171,28 +166,61 @@ class _SignUpScreenState extends State<SignupForTeacher> {
                       return InkWell(
                         splashColor: Colors.transparent,
                         onTap: () {
-                          if (_passwordController.text ==
-                              _confirmPasswordController.text) {
-                            context.read<AuthBloc>().add(
-                                  Register(
-                                    name: _nameController.text,
-                                    phone: _phoneController.text,
-                                    role: _selectedRole,
-                                    password: _passwordController.text,
-                                    passwordConfirmation:
-                                        _confirmPasswordController.text,
-                                  ),
-                                );
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => SignInScreen()),
-                            );
-                          } else {
+                          FocusScope.of(context).unfocus();
+                          if (_nameController.text.isEmpty ||
+                              _phoneController.text.isEmpty ||
+                              _passwordController.text.isEmpty ||
+                              _confirmPasswordController.text.isEmpty) {
                             ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                    content: Text('Passwords do not match')));
+                              const SnackBar(
+                                content: Text('Please fill in all fields'),
+                              ),
+                            );
+                            return;
                           }
+
+                          if (_passwordController.text.length < 6) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text(
+                                    'Password must be at least 6 characters long'),
+                              ),
+                            );
+                            return;
+                          }
+
+                          if (!_passwordController.text
+                              .contains(RegExp(r'[0-9]'))) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text(
+                                    'Password must contain both letters and numbers'),
+                              ),
+                            );
+                            return;
+                          }
+
+                          if (_passwordController.text !=
+                              _confirmPasswordController.text) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('Passwords do not match'),
+                              ),
+                            );
+                            return;
+                          }
+
+                          context.read<AuthBloc>().add(
+                                Register(
+                                  name: _nameController.text,
+                                  phone: _phoneController.text,
+                                  role: _selectedRole,
+                                  password: _passwordController.text,
+                                  passwordConfirmation:
+                                      _confirmPasswordController.text,
+                                ),
+                              );
+                          Navigator.pushReplacementNamed(context, "/");
                         },
                         child: Container(
                           height: 50,
@@ -213,9 +241,7 @@ class _SignUpScreenState extends State<SignupForTeacher> {
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
-                                SizedBox(
-                                  width: 10,
-                                ),
+                                SizedBox(width: 10),
                                 Icon(
                                   Icons.arrow_forward,
                                   color: Colors.white,
@@ -226,17 +252,27 @@ class _SignUpScreenState extends State<SignupForTeacher> {
                         ),
                       );
                     },
-                    listener: (context, state) {},
+                    listener: (context, state) {
+                      if (state is AuthErrorState) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(state.error),
+                          ),
+                        );
+                      }
+                    },
                   ),
-                  SizedBox(
-                    height: 15,
-                  ),
+                  const SizedBox(height: 15),
                   InkWell(
                     onTap: () {
-                      Navigator.pushReplacementNamed(context, '/');
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => SignInScreen(),
+                          ));
                     },
-                    child: Text(
-                      "Alredady Have an Account?",
+                    child: const Text(
+                      "Already Have an Account?",
                       style: TextStyle(
                         color: Colors.blue,
                         fontSize: 16,

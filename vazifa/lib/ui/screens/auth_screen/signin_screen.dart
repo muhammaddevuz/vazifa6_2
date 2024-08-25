@@ -8,6 +8,35 @@ class SignInScreen extends StatelessWidget {
 
   SignInScreen({super.key});
 
+  void _validateAndSubmit(BuildContext context) {
+    FocusScope.of(context).unfocus();
+    final String phone = _phoneController.text.trim();
+    final String password = _passwordController.text.trim();
+
+    if (phone.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Phone number cannot be empty'),
+          backgroundColor: Colors.red,
+        ),
+      );
+      return;
+    }
+
+    if (password.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Password cannot be empty'),
+          backgroundColor: Colors.red,
+        ),
+      );
+      return;
+    }
+
+    context.read<AuthBloc>().add(LogIn(phone: phone, password: password));
+    Navigator.pushReplacementNamed(context, "/");
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,6 +49,13 @@ class SignInScreen extends StatelessWidget {
           listener: (context, state) {
             if (state is Authenticated) {
               Navigator.of(context).pushReplacementNamed('/home');
+            } else if (state is AuthErrorState) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(state.error),
+                  backgroundColor: Colors.red,
+                ),
+              );
             }
           },
           child: Column(
@@ -56,7 +92,8 @@ class SignInScreen extends StatelessWidget {
                 height: 20,
               ),
               Container(
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 50),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 50),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(15),
@@ -72,7 +109,7 @@ class SignInScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 15,
                     ),
                     TextField(
@@ -90,7 +127,7 @@ class SignInScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         InkWell(
-                          child: Text(
+                          child: const Text(
                             "Forgot Password?",
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
@@ -100,7 +137,7 @@ class SignInScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 15,
                     ),
                     BlocConsumer<AuthBloc, AuthState>(
@@ -120,25 +157,7 @@ class SignInScreen extends StatelessWidget {
                         }
                         return InkWell(
                           splashColor: Colors.transparent,
-                          onTap: () {
-                            if (_passwordController.text.isNotEmpty &&
-                                _phoneController.text.isNotEmpty) {
-                              context.read<AuthBloc>().add(
-                                    LogIn(
-                                        phone: _phoneController.text,
-                                        password: _passwordController.text),
-                                  );
-                              // Navigator.pushReplacementNamed(context, "/home");
-                            } else {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text(
-                                    'Fill boxes',
-                                  ),
-                                ),
-                              );
-                            }
-                          },
+                          onTap: () => _validateAndSubmit(context),
                           child: Container(
                             height: 50,
                             width: double.infinity,
@@ -173,14 +192,14 @@ class SignInScreen extends StatelessWidget {
                       },
                       listener: (context, state) {},
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 15,
                     ),
                     InkWell(
                       onTap: () {
                         Navigator.pushReplacementNamed(context, "/signup");
                       },
-                      child: Text(
+                      child: const Text(
                         "Don't have an Account?",
                         style: TextStyle(
                           color: Colors.blue,

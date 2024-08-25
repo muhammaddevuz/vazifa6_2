@@ -21,6 +21,13 @@ class UpdateGroupEvent extends GroupEvent {
     required this.assistant_teacher_id,
   });
 }
+class DeleteGroupEvent extends GroupEvent {
+  final int groupId;
+
+  DeleteGroupEvent({
+    required this.groupId,
+  });
+}
 
 class AddGroupEvent extends GroupEvent {
   final String name;

@@ -87,6 +87,21 @@ class GroupService {
       print('Error: $e');
     }
   }
+  Future<void> deleteGroup(int groupId) async {
+    try {
+      final response = await dio.delete(
+        'http://millima.flutterwithakmaljon.uz/api/groups/$groupId',
+      );
+
+      if (response.statusCode == 200) {
+        print('Group deleted successfully');
+      } else {
+        print('Failed to delete group: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error: $e');
+    }
+  }
 
   Future<void> addStudentsToGroup(int groupId, List studentIds) async {
     try {

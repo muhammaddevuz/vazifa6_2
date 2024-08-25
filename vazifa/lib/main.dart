@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vazifa/blocs/auth_bloc/auth_bloc.dart';
 import 'package:vazifa/blocs/group_bloc/group_bloc.dart';
 import 'package:vazifa/blocs/current_user_bloc/current_user_bloc.dart';
+import 'package:vazifa/blocs/room_bloc.dart/room_bloc.dart';
 import 'package:vazifa/blocs/users_bloc/users_bloc.dart';
 import 'package:vazifa/ui/screens/managment_screen.dart';
 import 'package:vazifa/ui/screens/auth_screen/signin_screen.dart';
@@ -21,7 +22,8 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => AuthBloc()..add(AppStarted())),
         BlocProvider(create: (context) => CurrentUserBloc()),
         BlocProvider(create: (context) => UsersBloc()),
-        BlocProvider(create: (context) => GroupBloc())
+        BlocProvider(create: (context) => GroupBloc()),
+        BlocProvider(create: (context) => RoomBloc())
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -34,9 +36,15 @@ class MyApp extends StatelessWidget {
                     return ManagmentScreen();
                   } else if (state is UnauthenticatedState) {
                     return SignInScreen();
+                  } else if (state is AuthErrorState) {
+                    if (state.error == 'register') {
+                      return SignUpScreen();
+                    } else {
+                      print("ssssssss");
+                      return SignInScreen();
+                    }
                   } else {
-                    return Scaffold(
-                        body: Center(child: CircularProgressIndicator()));
+                    return SignInScreen();
                   }
                 },
               ),

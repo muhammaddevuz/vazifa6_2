@@ -4,8 +4,9 @@ import 'package:vazifa/blocs/auth_bloc/auth_bloc.dart';
 import 'package:vazifa/blocs/group_bloc/group_bloc.dart';
 import 'package:vazifa/blocs/group_bloc/group_event.dart';
 import 'package:vazifa/blocs/group_bloc/group_state.dart';
+import 'package:vazifa/ui/screens/group_information_screen.dart';
 import 'package:vazifa/ui/screens/profile_screen.dart';
-import 'package:vazifa/ui/screens/student_group_information.dart';
+// import 'package:vazifa/ui/screens/student_group_information.dart';
 
 class UserScreen extends StatefulWidget {
   const UserScreen({super.key});
@@ -75,7 +76,7 @@ class _UserScreenState extends State<UserScreen> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => StudentGroupInformation(
+                            builder: (context) => GroupInformationScreen(
                               groupModel: state.groups[index],
                             ),
                           ));

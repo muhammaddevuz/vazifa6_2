@@ -25,7 +25,7 @@ class _AddGroupState extends State<AddStudentToGroup> {
 
     widget.groupModel.students.forEach(
       (element) {
-        students.add(element['id']);
+        students.add(element.id);
       },
     );
   }

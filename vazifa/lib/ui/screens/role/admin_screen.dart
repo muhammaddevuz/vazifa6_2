@@ -5,9 +5,9 @@ import 'package:vazifa/blocs/auth_bloc/auth_bloc.dart';
 import 'package:vazifa/blocs/group_bloc/group_bloc.dart';
 import 'package:vazifa/blocs/group_bloc/group_event.dart';
 import 'package:vazifa/blocs/group_bloc/group_state.dart';
-import 'package:vazifa/ui/screens/add_student_to_group.dart';
+import 'package:vazifa/ui/screens/admin_drawer/add_student_to_group.dart';
 import 'package:vazifa/ui/screens/group_information_screen.dart';
-import 'package:vazifa/ui/screens/update_group.dart';
+import 'package:vazifa/ui/screens/admin_drawer/update_group.dart';
 import 'package:vazifa/ui/widget/custom_drawer_for_admin.dart';
 
 class AdminScreen extends StatefulWidget {
@@ -67,7 +67,9 @@ class _AdminScreenState extends State<AdminScreen> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => GroupInformationScreen(groupModel: state.groups[index],),
+                            builder: (context) => GroupInformationScreen(
+                              groupModel: state.groups[index],
+                            ),
                           ));
                     },
                     child: Container(
@@ -79,12 +81,33 @@ class _AdminScreenState extends State<AdminScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            "Group Name: ${state.groups[index].name}",
-                            style: TextStyle(
-                                fontSize: 25,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.white),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "Group Name: ${state.groups[index].name}",
+                                style: TextStyle(
+                                    fontSize: 25,
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.white),
+                              ),
+                              IconButton(
+                                  onPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              AddStudentToGroup(
+                                                  groupModel:
+                                                      state.groups[index]),
+                                        ));
+                                  },
+                                  icon: Icon(
+                                    CupertinoIcons.person_add_solid,
+                                    size: 30,
+                                    color: Colors.white,
+                                  ))
+                            ],
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -124,19 +147,14 @@ class _AdminScreenState extends State<AdminScreen> {
                               ),
                               IconButton(
                                   onPressed: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              AddStudentToGroup(
-                                                  groupModel:
-                                                      state.groups[index]),
-                                        ));
+                                    context.read<GroupBloc>().add(
+                                        DeleteGroupEvent(
+                                            groupId: state.groups[index].id));
                                   },
                                   icon: Icon(
-                                    CupertinoIcons.person_add_solid,
+                                    Icons.delete,
                                     size: 30,
-                                    color: Colors.white,
+                                    color: Colors.red,
                                   ))
                             ],
                           )
@@ -154,6 +172,7 @@ class _AdminScreenState extends State<AdminScreen> {
           child: Text("Grouplar topilmadi!"),
         );
       }),
+   
     );
   }
 }

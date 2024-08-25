@@ -12,14 +12,10 @@ class SignUpScreen extends StatefulWidget {
 
 class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController _nameController = TextEditingController();
-
   final TextEditingController _phoneController = TextEditingController();
-
   final TextEditingController _passwordController = TextEditingController();
-
   final TextEditingController _confirmPasswordController =
       TextEditingController();
-
 
   @override
   Widget build(BuildContext context) {
@@ -46,9 +42,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     fit: BoxFit.cover,
                   ),
                 ),
-                const SizedBox(
-                  width: 5,
-                ),
+                const SizedBox(width: 5),
                 const Text(
                   "WorkRoom",
                   style: TextStyle(
@@ -59,9 +53,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
               ],
             ),
-            const SizedBox(
-              height: 20,
-            ),
+            const SizedBox(height: 20),
             Container(
               decoration: BoxDecoration(
                 color: Colors.white,
@@ -77,9 +69,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  const SizedBox(
-                    height: 25,
-                  ),
+                  const SizedBox(height: 25),
                   TextField(
                     controller: _nameController,
                     decoration: InputDecoration(
@@ -89,9 +79,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ),
                     ),
                   ),
-                  const SizedBox(
-                    height: 15,
-                  ),
+                  const SizedBox(height: 15),
                   TextField(
                     controller: _phoneController,
                     decoration: InputDecoration(
@@ -101,9 +89,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ),
                     ),
                   ),
-                  const SizedBox(
-                    height: 15,
-                  ),
+                  const SizedBox(height: 15),
                   TextField(
                     controller: _passwordController,
                     decoration: InputDecoration(
@@ -114,9 +100,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                     obscureText: true,
                   ),
-                  const SizedBox(
-                    height: 15,
-                  ),
+                  const SizedBox(height: 15),
                   TextField(
                     controller: _confirmPasswordController,
                     decoration: InputDecoration(
@@ -127,9 +111,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                     obscureText: true,
                   ),
-                  const SizedBox(
-                    height: 15,
-                  ),
+                  const SizedBox(height: 15),
                   const SizedBox(height: 16),
                   BlocConsumer<AuthBloc, AuthState>(
                     builder: (context, state) {
@@ -139,8 +121,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           width: double.infinity,
                           padding: const EdgeInsets.all(15),
                           decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                              color: Colors.blue),
+                            borderRadius: BorderRadius.circular(15),
+                            color: Colors.blue,
+                          ),
                           child: const Center(
                             child: CircularProgressIndicator(),
                           ),
@@ -149,28 +132,61 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       return InkWell(
                         splashColor: Colors.transparent,
                         onTap: () {
-                          if (_passwordController.text ==
-                              _confirmPasswordController.text) {
-                            context.read<AuthBloc>().add(
-                                  Register(
-                                    name: _nameController.text,
-                                    phone: _phoneController.text,
-                                    role: 1,
-                                    password: _passwordController.text,
-                                    passwordConfirmation:
-                                        _confirmPasswordController.text,
-                                  ),
-                                );
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => SignInScreen()),
-                            );
-                          } else {
+                          FocusScope.of(context).unfocus();
+                          if (_nameController.text.isEmpty ||
+                              _phoneController.text.isEmpty ||
+                              _passwordController.text.isEmpty ||
+                              _confirmPasswordController.text.isEmpty) {
                             ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                    content: Text('Passwords do not match')));
+                              const SnackBar(
+                                content: Text('Please fill in all fields'),
+                              ),
+                            );
+                            return;
                           }
+
+                          if (_passwordController.text.length < 6) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text(
+                                    'Password must be at least 6 characters long'),
+                              ),
+                            );
+                            return;
+                          }
+
+                          if (!_passwordController.text
+                                  .contains(RegExp(r'[0-9]'))) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text(
+                                    'Password must contain both letters and numbers'),
+                              ),
+                            );
+                            return;
+                          }
+
+                          if (_passwordController.text !=
+                              _confirmPasswordController.text) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('Passwords do not match'),
+                              ),
+                            );
+                            return;
+                          }
+
+                          context.read<AuthBloc>().add(
+                                Register(
+                                  name: _nameController.text,
+                                  phone: _phoneController.text,
+                                  role: 1,
+                                  password: _passwordController.text,
+                                  passwordConfirmation:
+                                      _confirmPasswordController.text,
+                                ),
+                              );
+                          Navigator.pushReplacementNamed(context, "/");
                         },
                         child: Container(
                           height: 50,
@@ -191,9 +207,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
-                                SizedBox(
-                                  width: 10,
-                                ),
+                                SizedBox(width: 10),
                                 Icon(
                                   Icons.arrow_forward,
                                   color: Colors.white,
@@ -204,16 +218,26 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ),
                       );
                     },
-                    listener: (context, state) {},
+                    listener: (context, state) {
+                      if (state is AuthErrorState) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(state.error),
+                          ),
+                        );
+                      }
+                    },
                   ),
-                  SizedBox(
-                    height: 15,
-                  ),
+                  const SizedBox(height: 15),
                   InkWell(
                     onTap: () {
-                      Navigator.pushReplacementNamed(context, '/');
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => SignInScreen(),
+                          ));
                     },
-                    child: Text(
+                    child: const Text(
                       "Alredady Have an Account?",
                       style: TextStyle(
                         color: Colors.blue,
@@ -222,12 +246,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   InkWell(
                     onTap: () {
                       Navigator.pushReplacementNamed(context, '/signupteacher');
                     },
-                    child: Text(
+                    child: const Text(
                       "Teacher and Admin",
                       style: TextStyle(
                         color: Colors.blue,

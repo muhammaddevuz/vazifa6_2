@@ -32,19 +32,21 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       final AuthentificationService authentificationService =
           AuthentificationService();
 
-      final String token = await authentificationService.register(
+      final response = await authentificationService.register(
         event.name,
         event.phone,
         event.role,
         event.password,
         event.passwordConfirmation,
       );
-
-      // Save the token in SharedPreferences
-      await prefs.setString('token', token);
-
-      // Emit the Authenticated state with the new token
-      emit(Authenticated(token: token));
+      if (response['success'] == true) {
+        await prefs.setString('token', response['data']['token']);
+        emit(Authenticated(token: response['data']['token']));
+      } else {
+        emit(
+          AuthErrorState(error: "telefon raqam band"),
+        );
+      }
     } on DioException catch (error) {
       throw error.message.toString();
     } catch (error) {
@@ -58,14 +60,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       final prefs = await SharedPreferences.getInstance();
       final AuthentificationService authentificationService =
           AuthentificationService();
-      final String token =
+      final response =
           await authentificationService.login(event.phone, event.password);
-      if (token.split("-").first == "true") {
-        await prefs.setString('token', token.split("-").last);
-        emit(Authenticated(token: token));
+      if (response['success'].toString() == "true") {
+        await prefs.setString('token', response['data']['token']);
+        emit(Authenticated(token: response['data']['token']));
       } else {
         emit(
-          AuthErrorState(error: "Failed to log in"),
+          AuthErrorState(error: "login yoki parol xato"),
         );
       }
     } catch (error) {

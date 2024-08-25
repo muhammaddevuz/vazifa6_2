@@ -5,13 +5,13 @@ class GroupModel {
   String name;
   UserModel main_teacher;
   UserModel assistant_teacher;
-  List students;
+  List<UserModel> students;
 
   GroupModel({
     required this.id,
     required this.name,
     required this.main_teacher,
     required this.assistant_teacher,
-    List? students,
+    List<UserModel>? students,
   }): this.students = students ?? [];
 }
