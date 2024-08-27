@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vazifa/blocs/group_bloc/group_bloc.dart';
 import 'package:vazifa/blocs/group_bloc/group_event.dart';
+import 'package:vazifa/data/model/Subject_model.dart';
 import 'package:vazifa/data/model/user_model.dart';
 import 'package:vazifa/ui/screens/role/admin_screen.dart';
+import 'package:vazifa/ui/widget/choose_subjects.dart';
 import 'package:vazifa/ui/widget/choose_teacher.dart';
 import 'package:vazifa/ui/widget/custom_drawer_for_admin.dart';
 
@@ -19,6 +21,7 @@ class _AddGroupState extends State<AddGroup> {
   TextEditingController nameEditingController = TextEditingController();
   UserModel? mainTeacher;
   UserModel? asistantTeacher;
+  SubjectModel? subjectModel;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -95,12 +98,39 @@ class _AddGroupState extends State<AddGroup> {
               ],
             ),
             SizedBox(height: 15),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    Text(
+                      "Subjects: ",
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+                    ),
+                    Text(
+                      "${subjectModel != null ? subjectModel!.name : ""}",
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+                    ),
+                  ],
+                ),
+                IconButton(
+                    onPressed: () async {
+                      subjectModel = await chooseSubject(context);
+                      setState(() {});
+                    },
+                    icon: Icon(CupertinoIcons.person_add_solid))
+              ],
+            ),
+            SizedBox(height: 15),
             ElevatedButton(
                 onPressed: () {
                   context.read<GroupBloc>().add(AddGroupEvent(
                       name: nameEditingController.text,
                       main_teacher_id: mainTeacher!.id,
-                      assistant_teacher_id: asistantTeacher!.id));
+                      assistant_teacher_id: asistantTeacher!.id,
+                      subjectId: subjectModel!.id));
                   Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(

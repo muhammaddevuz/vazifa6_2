@@ -4,6 +4,7 @@ import 'package:vazifa/blocs/auth_bloc/auth_bloc.dart';
 import 'package:vazifa/blocs/group_bloc/group_bloc.dart';
 import 'package:vazifa/blocs/current_user_bloc/current_user_bloc.dart';
 import 'package:vazifa/blocs/room_bloc.dart/room_bloc.dart';
+import 'package:vazifa/blocs/subject_bloc/subject_bloc.dart';
 import 'package:vazifa/blocs/timetable_bloc/timetable_bloc.dart';
 import 'package:vazifa/blocs/users_bloc/users_bloc.dart';
 import 'package:vazifa/ui/screens/managment_screen.dart';
@@ -25,7 +26,8 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => UsersBloc()),
         BlocProvider(create: (context) => GroupBloc()),
         BlocProvider(create: (context) => RoomBloc()),
-        BlocProvider(create: (context) => TimetableBloc())
+        BlocProvider(create: (context) => TimetableBloc()),
+        BlocProvider(create: (context) => SubjectBloc())
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

@@ -46,9 +46,14 @@ class _ShowGroupTimetableState extends State<ShowGroupTimetable> {
             );
           }
           if (state is TimeTableLoadedState) {
+            if (state.TimeTables == null) {
+              return Center(
+                child: Text("Timetable hali mavjud emas"),
+              );
+            }
             return ListView(
               padding: EdgeInsets.all(8.0),
-              children: state.TimeTables.week_days.entries.map((entry) {
+              children: state.TimeTables!.week_days.entries.map((entry) {
                 String weekDay = entry.key;
                 List<WeekDays> timetable = entry.value;
 
@@ -82,6 +87,7 @@ class _ShowGroupTimetableState extends State<ShowGroupTimetable> {
           );
         },
       ),
+    
     );
   }
 }

@@ -39,12 +39,14 @@ class GroupItemForAdmin extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      "Group Name: ${groupModel.name}",
-                      style: TextStyle(
-                          fontSize: 25,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.white),
+                    Expanded(
+                      child: Text(
+                        "Group Name: ${groupModel.name}",
+                        style: TextStyle(
+                            fontSize: 25,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.white),
+                      ),
                     ),
                     IconButton(
                         onPressed: () {

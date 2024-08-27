@@ -33,11 +33,13 @@ class AddGroupEvent extends GroupEvent {
   final String name;
   final int main_teacher_id;
   final int assistant_teacher_id;
+  final int subjectId;
 
   AddGroupEvent({
     required this.name,
     required this.main_teacher_id,
     required this.assistant_teacher_id,
+    required this.subjectId,
   });
 }
 

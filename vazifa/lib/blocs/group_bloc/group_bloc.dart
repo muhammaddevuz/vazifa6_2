@@ -20,6 +20,8 @@ class GroupBloc extends Bloc<GroupEvent, GroupState> {
     try {
       final response = await groupService.getGroups();
       List<GroupModel> groups = [];
+      print(response['data']);
+      print("++++++++++++++++++++++++++++++++++");
 
       response['data'].forEach((value) {
         groups.add(GroupModel.fromMap(value));
@@ -27,6 +29,8 @@ class GroupBloc extends Bloc<GroupEvent, GroupState> {
 
       emit(GroupLoadedState(groups: groups));
     } catch (e) {
+      print(e);
+      print("-------------");
       emit(GroupErrorState(error: e.toString()));
     }
   }
@@ -52,7 +56,7 @@ class GroupBloc extends Bloc<GroupEvent, GroupState> {
     final GroupService groupService = GroupService();
     try {
       await groupService.addGroup(
-          event.name, event.main_teacher_id, event.assistant_teacher_id);
+          event.name, event.main_teacher_id, event.assistant_teacher_id,event.subjectId);
       add(GetGroupsEvent());
     } catch (e) {
       emit(GroupErrorState(error: e.toString()));

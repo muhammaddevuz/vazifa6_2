@@ -64,6 +64,11 @@ class _UserScreenState extends State<UserScreen> {
           );
         }
         if (state is GroupLoadedState) {
+          if (state.groups.length == 0) {
+            return Center(
+              child: Text("Guruxlar mavjud emas"),
+            );
+          }
           return ListView.builder(
             padding: EdgeInsets.symmetric(horizontal: 20),
             itemCount: state.groups.length,

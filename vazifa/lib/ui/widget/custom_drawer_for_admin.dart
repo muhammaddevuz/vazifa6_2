@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:vazifa/ui/screens/admin_drawer/add_group.dart';
 import 'package:vazifa/ui/screens/admin_drawer/room_screen.dart';
+import 'package:vazifa/ui/screens/admin_drawer/subject_screen.dart';
 import 'package:vazifa/ui/screens/profile_screen.dart';
 import 'package:vazifa/ui/screens/role/admin_screen.dart';
 import 'package:vazifa/ui/screens/admin_drawer/show_users_screen.dart';
@@ -153,6 +154,24 @@ class CustomDrawerForAdmin extends StatelessWidget {
             },
             title: const Text(
               "Rooms",
+            ),
+            trailing: const Icon(
+              Icons.keyboard_arrow_right,
+            ),
+          ),
+          ListTile(
+            onTap: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (ctx) {
+                    return const SubjectScreen();
+                  },
+                ),
+              );
+            },
+            title: const Text(
+              "Subjects",
             ),
             trailing: const Icon(
               Icons.keyboard_arrow_right,

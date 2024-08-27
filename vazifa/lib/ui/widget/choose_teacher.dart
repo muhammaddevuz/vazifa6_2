@@ -42,23 +42,21 @@ Future<UserModel?> chooseTeacher(BuildContext context) {
                         style: TextStyle(fontSize: 20),
                       ),
                       subtitle: Text(roleUsers[index].phone),
-                      leading: CircleAvatar(
-                        child: Container(
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Colors.grey,
-                          ),
-                          clipBehavior: Clip.hardEdge,
-                          child: roleUsers[index].photo == null
-                              ? Icon(
-                                  Icons.person,
-                                  size: 40,
-                                )
-                              : Image.network(
-                                  "http://millima.flutterwithakmaljon.uz/storage/avatars/${roleUsers[index].photo}",
-                                  fit: BoxFit.cover,
-                                ),
+                      leading: Container(
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.grey,
                         ),
+                        clipBehavior: Clip.hardEdge,
+                        child: roleUsers[index].photo == null
+                            ? Icon(
+                                Icons.person,
+                                size: 40,
+                              )
+                            : Image.network(
+                                "http://millima.flutterwithakmaljon.uz/storage/avatars/${roleUsers[index].photo}",
+                                fit: BoxFit.cover,
+                              ),
                       ),
                       onTap: () {
                         selectedUser = roleUsers[index];

@@ -40,6 +40,7 @@ dependencies:
   dio: ^5.6.0
   shared_preferences: ^2.3.2
   image_picker: ^1.1.2
+  flutter_datetime_picker: ^1.5.1
 
 dev_dependencies:
   flutter_test:

@@ -88,7 +88,7 @@ class _ManageRoomState extends State<ManageRoom> {
                     backgroundColor: Colors.blue,
                     padding: EdgeInsets.fromLTRB(30, 10, 30, 10)),
                 child: Text(
-                  "Add Room",
+                  widget.roomModel == null ? "Add Room" : "Edit Room",
                   style: TextStyle(
                       fontSize: 25,
                       fontWeight: FontWeight.w600,

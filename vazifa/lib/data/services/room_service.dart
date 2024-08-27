@@ -8,8 +8,7 @@ class RoomService {
     dio.interceptors.add(AuthInterceptor());
   }
 
-  Future<void> addRoom(
-      String name, String description, int capacity) async {
+  Future<void> addRoom(String name, String description, int capacity) async {
     try {
       dio.options.headers['Content-Type'] = 'application/json';
 
@@ -50,16 +49,19 @@ class RoomService {
       throw e;
     }
   }
+
   Future<Map<String, dynamic>> getAvailableRooms(
     int day_id,
     String start_time,
     String end_time,
   ) async {
     try {
+      print(
+          "http://millima.flutterwithakmaljon.uz/api/available-rooms?day_id=$day_id&start_time=$start_time&end_time=$end_time");
+      print("-------------------------------");
       final response = await dio.get(
         'http://millima.flutterwithakmaljon.uz/api/available-rooms?day_id=$day_id&start_time=$start_time&end_time=$end_time',
       );
-
       if (response.data['success'] == false) {
         throw response.data;
       }
@@ -70,8 +72,8 @@ class RoomService {
     }
   }
 
-  Future<void> updateRoom(int roomId,
-      String name, String description, int capacity) async {
+  Future<void> updateRoom(
+      int roomId, String name, String description, int capacity) async {
     try {
       final response = await dio.put(
         'http://millima.flutterwithakmaljon.uz/api/rooms/$roomId',
@@ -91,6 +93,7 @@ class RoomService {
       print('Error: $e');
     }
   }
+
   Future<void> deleteRoom(int roomId) async {
     try {
       final response = await dio.delete(
@@ -106,6 +109,4 @@ class RoomService {
       print('Error: $e');
     }
   }
-
-  
 }

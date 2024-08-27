@@ -9,7 +9,7 @@ class GroupService {
   }
 
   Future<void> addGroup(
-      String name, int mainTeacherId, int assistantTeacherId) async {
+      String name, int mainTeacherId, int assistantTeacherId,int subjectId) async {
     try {
       dio.options.headers['Content-Type'] = 'application/json';
 
@@ -17,6 +17,7 @@ class GroupService {
         "name": name,
         "main_teacher_id": mainTeacherId,
         "assistant_teacher_id": assistantTeacherId,
+        "subject_id":subjectId
       };
 
       final response = await dio.post(
@@ -50,6 +51,7 @@ class GroupService {
       throw e;
     }
   }
+
   Future<Map<String, dynamic>> getStudentGroups() async {
     try {
       final response = await dio.get(
@@ -87,6 +89,7 @@ class GroupService {
       print('Error: $e');
     }
   }
+
   Future<void> deleteGroup(int groupId) async {
     try {
       final response = await dio.delete(
@@ -121,6 +124,4 @@ class GroupService {
       print('Error: $e');
     }
   }
-
-  
 }

@@ -26,7 +26,7 @@ class _CreateTimetableState extends State<CreateTimetable> {
   Future<void> _selectTime(BuildContext context, bool isStartTime) async {
     final TimeOfDay? picked = await showTimePicker(
       context: context,
-      initialTime: TimeOfDay.now(),
+      initialTime: isStartTime ? TimeOfDay.now() : startTime ?? TimeOfDay.now(),
     );
     if (picked != null) {
       setState(() {
@@ -101,12 +101,29 @@ class _CreateTimetableState extends State<CreateTimetable> {
                       startTime != null &&
                       endTime != null
                   ? () async {
-                      await ChooseRoom(
-                          context,
-                          widget.groupId,
-                          (selectedDayIndex! + 1),
-                          "${startTime!.hour}:${startTime!.minute}",
-                          "${endTime!.hour}:${endTime!.minute}");
+                      String start = startTime!.format(context);
+                      String end = endTime!.format(context);
+                      if (start.split(' ')[1] == 'PM') {
+                        start =
+                            "${int.parse(start.split(" ")[0].split(":")[0]) + 12}:${start.split(" ")[0].split(":")[1]}";
+                      } else if (start.split(" ")[0].split(":")[0].length ==
+                          1) {
+                        start = "0${start.split(' ')[0]}";
+                      } else {
+                        start = start.split(' ')[0];
+                      }
+                      if (end.split(' ')[1] == 'PM') {
+                        end =
+                            "${int.parse(end.split(" ")[0].split(":")[0]) + 12}:${end.split(" ")[0].split(":")[1]}";
+                      } else if (end.split(" ")[0].split(":")[0].length == 1) {
+                        end = "0${end.split(' ')[0]}";
+                      } else {
+                        end = end.split(' ')[0];
+                      }
+                      print(end);
+                      print(start);
+                      await ChooseRoom(context, widget.groupId,
+                          (selectedDayIndex! + 1), start, end);
                     }
                   : null,
               child: Text("Get Rooms"),
