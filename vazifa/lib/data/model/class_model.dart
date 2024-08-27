@@ -17,8 +17,8 @@ class ClassModel {
   factory ClassModel.fromMap(Map<String, dynamic> map) {
     return ClassModel(
       id: map['id'],
-      room_name: map['room_id'].toString(),
-      day_name: map['day_id'].toString(),
+      room_name: map['room']['name'],
+      day_name: map['day']['name'],
       start_time: map['start_time'],
       end_time: map['end_time'],
     );
