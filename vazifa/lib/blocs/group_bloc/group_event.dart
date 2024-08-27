@@ -7,6 +7,7 @@ sealed class GroupEvent extends Equatable {
 
 class GetGroupsEvent extends GroupEvent {}
 class GetStudentGroupsEvent extends GroupEvent {}
+class GetTeacherGroupsEvent extends GroupEvent {}
 
 class UpdateGroupEvent extends GroupEvent {
   final int groupId;

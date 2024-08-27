@@ -7,7 +7,7 @@ class AuthInterceptor extends InterceptorsWrapper {
       RequestOptions options, RequestInterceptorHandler handler) async {
     // SharedPreferences dan tokenni olish
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? token = prefs.getString("token");
+    String? token =await prefs.getString("token");
     print(token);
 
     if (token != null) {

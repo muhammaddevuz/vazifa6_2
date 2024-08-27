@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vazifa/blocs/users_bloc/users_bloc.dart';
 import 'package:vazifa/blocs/users_bloc/users_event.dart';
 import 'package:vazifa/data/model/group_model.dart';
+
 class GroupInformationScreen extends StatefulWidget {
   final GroupModel groupModel;
   const GroupInformationScreen({super.key, required this.groupModel});
@@ -38,9 +39,22 @@ class _GroupInformationScreenState extends State<GroupInformationScreen> {
             children: [
               Padding(
                 padding: const EdgeInsets.only(left: 10),
-                child: Text(
-                  "Teachers",
-                  style: TextStyle(fontSize: 25, fontWeight: FontWeight.w600),
+                child: Column(
+                  children: [
+                    if (widget.groupModel.subjectModel != null)
+                      Text(
+                        "Subject: ${widget.groupModel.subjectModel!.name}",
+                        style: TextStyle(
+                            fontSize: 25,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.white),
+                      ),
+                    Text(
+                      "Teachers",
+                      style:
+                          TextStyle(fontSize: 25, fontWeight: FontWeight.w600),
+                    ),
+                  ],
                 ),
               ),
               ListTile(

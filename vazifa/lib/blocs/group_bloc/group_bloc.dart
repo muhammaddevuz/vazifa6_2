@@ -8,6 +8,7 @@ class GroupBloc extends Bloc<GroupEvent, GroupState> {
   GroupBloc() : super(GroupInitialState()) {
     on<GetGroupsEvent>(_onGetGroups);
     on<GetStudentGroupsEvent>(_onGetStudentGroups);
+    on<GetTeacherGroupsEvent>(_onGetTeacherGroups);
     on<AddGroupEvent>(_addGroups);
     on<UpdateGroupEvent>(_updateGroups);
     on<AddStudentsToGroupEvent>(_addStudentsToGroups);
@@ -52,11 +53,28 @@ class GroupBloc extends Bloc<GroupEvent, GroupState> {
     }
   }
 
+  Future<void> _onGetTeacherGroups(GetTeacherGroupsEvent event, emit) async {
+    emit(GroupLoadingState());
+    final GroupService groupService = GroupService();
+    try {
+      final response = await groupService.getTeacherGroups();
+      List<GroupModel> groups = [];
+
+      response['data'].forEach((value) {
+        groups.add(GroupModel.fromMap(value));
+      });
+
+      emit(GroupLoadedState(groups: groups));
+    } catch (e) {
+      emit(GroupErrorState(error: e.toString()));
+    }
+  }
+
   Future<void> _addGroups(AddGroupEvent event, emit) async {
     final GroupService groupService = GroupService();
     try {
-      await groupService.addGroup(
-          event.name, event.main_teacher_id, event.assistant_teacher_id,event.subjectId);
+      await groupService.addGroup(event.name, event.main_teacher_id,
+          event.assistant_teacher_id, event.subjectId);
       add(GetGroupsEvent());
     } catch (e) {
       emit(GroupErrorState(error: e.toString()));

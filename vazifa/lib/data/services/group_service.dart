@@ -67,6 +67,21 @@ class GroupService {
       throw e;
     }
   }
+  Future<Map<String, dynamic>> getTeacherGroups() async {
+    try {
+      final response = await dio.get(
+        'http://millima.flutterwithakmaljon.uz/api/teacher/groups',
+      );
+
+      if (response.data['success'] == false) {
+        throw response.data;
+      }
+      return response.data;
+    } catch (e) {
+      print('Error adding group: $e');
+      throw e;
+    }
+  }
 
   Future<void> updateGroup(int groupId, String name, int mainTeacherId,
       int assistantTeacherId) async {

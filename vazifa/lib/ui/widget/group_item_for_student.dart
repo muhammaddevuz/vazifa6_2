@@ -39,6 +39,7 @@ class _GroupItemForStudentState extends State<GroupItemForStudent> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                
                 Text(
                   "Group Name: ${widget.groupModel.name}",
                   style: TextStyle(
