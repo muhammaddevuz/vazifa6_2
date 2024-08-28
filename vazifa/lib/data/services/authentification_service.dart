@@ -1,4 +1,8 @@
+// ignore_for_file: avoid_print
+
 import 'package:dio/dio.dart';
+import 'package:vazifa/data/model/authentification_response.dart';
+import 'package:vazifa/data/model/social_login_request.dart';
 import 'package:vazifa/data/services/authentification_interseptor.dart';
 
 class AuthentificationService {
@@ -44,12 +48,25 @@ class AuthentificationService {
     }
   }
 
+  Future<AuthenticationResponse> socialLogin(SocialLoginRequest request) async {
+    try {
+      final response = await dio.post(
+        'http://millima.flutterwithakmaljon.uz/api/social-login',
+        data: request.toMap(),
+      );
+      return AuthenticationResponse.fromMap(response.data['data']);
+    } on DioException catch (e) {
+      throw (e.response?.data);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
   Future<String> logout() async {
     try {
       final response = await dio.post(
         "http://millima.flutterwithakmaljon.uz/api/logout",
       );
-
 
       if (response.data['success'] == true) {
         return "success";

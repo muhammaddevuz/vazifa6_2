@@ -13,6 +13,11 @@ class LogIn extends AuthEvent {
 
   LogIn({required this.phone, required this.password});
 }
+class SocialLogInEvent extends AuthEvent {
+  final SocialLoginTypes type;
+
+  SocialLogInEvent({required this.type});
+}
 
 class Register extends AuthEvent {
   final String name;

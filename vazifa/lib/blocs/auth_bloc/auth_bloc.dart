@@ -1,11 +1,16 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:equatable/equatable.dart';
+import 'package:vazifa/data/model/social_login_request.dart';
 import 'package:vazifa/data/services/authentification_service.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';
+
+enum SocialLoginTypes { google, facebook, github }
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc() : super(AuthInitial()) {
@@ -13,6 +18,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<LogIn>(_onLogIn);
     on<LoggedOut>(_onLoggedOut);
     on<Register>(_onRegister);
+    on<SocialLogInEvent>(_onSocialLogin);
   }
 
   void _onAppStarted(AppStarted event, Emitter<AuthState> emit) async {
@@ -72,6 +78,57 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       }
     } catch (error) {
       emit(AuthErrorState(error: error.toString()));
+    }
+  }
+
+  void _onSocialLogin(
+    SocialLogInEvent event,
+    Emitter<AuthState> emit,
+  ) async {
+    final AuthentificationService authentificationService =
+        AuthentificationService();
+    emit(AuthLoadingState());
+
+    try {
+      SocialLoginRequest? request;
+      switch (event.type) {
+        case SocialLoginTypes.google:
+          const List<String> scopes = <String>['email'];
+          final googleSignIn = GoogleSignIn(scopes: scopes);
+          final googleUser = await googleSignIn.signIn();
+          if (googleUser != null) {
+            request = SocialLoginRequest(
+              name: googleUser.displayName ?? '',
+              email: googleUser.email,
+            );
+          }
+          break;
+        case SocialLoginTypes.facebook:
+          final result = await FacebookAuth.instance.login();
+          if (result.status == LoginStatus.success) {
+            final userData = await FacebookAuth.i.getUserData(
+              fields: "name,email",
+            );
+            request = SocialLoginRequest(
+              name: userData['name'] ?? '',
+              email: userData['email'],
+            );
+          }
+          break;
+        default:
+          return;
+      }
+
+      if (request != null) {
+        final data = await authentificationService.socialLogin(request);
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.setString('token', data.token);
+        emit(Authenticated(token: data.token));
+      } else {
+        throw ('User not found');
+      }
+    } catch (e) {
+      emit(AuthErrorState(error: e.toString()));
     }
   }
 

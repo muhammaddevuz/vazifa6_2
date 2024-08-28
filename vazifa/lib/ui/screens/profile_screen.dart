@@ -55,14 +55,15 @@ class _UserProfileScreenState extends State<ProfileScreen> {
         ),
         centerTitle: true,
       ),
-      body: BlocBuilder<CurrentUserBloc, CurrentUserState>(builder: (context, state) {
+      body: BlocBuilder<CurrentUserBloc, CurrentUserState>(
+          builder: (context, state) {
         if (state is CurrentUserLoadingState) {
           return const Center(
             child: CircularProgressIndicator(),
           );
         } else if (state is CurrentUserLoadedState) {
           nameEditingController.text = state.user.name;
-          phoneEditingController.text = state.user.phone!;
+          phoneEditingController.text = state.user.phone ?? "";
           emailEditingController.text = state.user.email ?? "";
           return Padding(
             padding: const EdgeInsets.all(20.0),
@@ -139,7 +140,9 @@ class _UserProfileScreenState extends State<ProfileScreen> {
                   const SizedBox(height: 15),
                   ElevatedButton(
                       onPressed: () {
-                        context.read<CurrentUserBloc>().add(UpdateCurrentUserEvent(
+                        context
+                            .read<CurrentUserBloc>()
+                            .add(UpdateCurrentUserEvent(
                               name: nameEditingController.text,
                               phone: phoneEditingController.text,
                               email: emailEditingController.text,
