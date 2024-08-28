@@ -13,11 +13,11 @@ Future<List?> updateStudents(BuildContext context, List selectedUserIds) {
       return StatefulBuilder(
         builder: (context, setState) {
           return AlertDialog(
-            title: Text("Studentlarni tanlang"),
+            title: const Text("Studentlarni tanlang"),
             content:
                 BlocBuilder<UsersBloc, UsersState>(builder: (context, state) {
               if (state is UsersLoadingState) {
-                return Center(
+                return const Center(
                   child: CircularProgressIndicator(),
                 );
               }
@@ -42,22 +42,22 @@ Future<List?> updateStudents(BuildContext context, List selectedUserIds) {
                       return ListTile(
                         title: Text(
                           user.name,
-                          style: TextStyle(fontSize: 20),
+                          style: const TextStyle(fontSize: 20),
                         ),
-                        subtitle: Text(user.phone),
+                        subtitle: Text(user.phone!),
                         leading: Container(
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                               shape: BoxShape.circle, color: Colors.grey),
                           clipBehavior: Clip.hardEdge,
                           child: user.photo == null
-                              ? Icon(Icons.person, size: 40)
+                              ? const Icon(Icons.person, size: 40)
                               : Image.network(
                                   "http://millima.flutterwithakmaljon.uz/storage/avatars/${user.photo}",
                                   fit: BoxFit.cover,
                                 ),
                         ),
                         trailing: isSelected
-                            ? Icon(Icons.check, color: Colors.green)
+                            ? const Icon(Icons.check, color: Colors.green)
                             : null,
                         onTap: () {
                           setState(() {
@@ -73,7 +73,7 @@ Future<List?> updateStudents(BuildContext context, List selectedUserIds) {
                   ),
                 );
               }
-              return Center(
+              return const Center(
                 child: Text("User topilmadi!"),
               );
             }),
@@ -83,13 +83,13 @@ Future<List?> updateStudents(BuildContext context, List selectedUserIds) {
                   Navigator.of(context).pop(
                       selectedUserIds); // Tanlangan userlarning IDlarini qaytarish
                 },
-                child: Text('Qo\'shish'),
+                child: const Text('Qo\'shish'),
               ),
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pop(); // Dialogni yopish
                 },
-                child: Text('Bekor qilish'),
+                child: const Text('Bekor qilish'),
               ),
             ],
           );

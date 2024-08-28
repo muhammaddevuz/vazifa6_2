@@ -4,7 +4,7 @@ import 'package:vazifa/blocs/auth_bloc/auth_bloc.dart';
 import 'package:vazifa/ui/screens/auth_screen/signin_screen.dart';
 
 class SignupForTeacher extends StatefulWidget {
-  SignupForTeacher({super.key});
+  const SignupForTeacher({super.key});
 
   @override
   State<SignupForTeacher> createState() => _SignUpScreenState();
@@ -61,7 +61,7 @@ class _SignUpScreenState extends State<SignupForTeacher> {
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(15),
               ),
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 50),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 50),
               child: Column(
                 children: [
                   const Text(

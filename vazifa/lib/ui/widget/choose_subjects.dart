@@ -13,11 +13,11 @@ Future<SubjectModel?> chooseSubject(BuildContext context) {
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        title: Text("Fanni tanlang"),
+        title: const Text("Fanni tanlang"),
         content: BlocBuilder<SubjectBloc, SubjectState>(
           builder: (context, state) {
             if (state is SubjectLoadingState) {
-              return Center(
+              return const Center(
                 child: CircularProgressIndicator(),
               );
             }
@@ -29,7 +29,7 @@ Future<SubjectModel?> chooseSubject(BuildContext context) {
             if (state is SubjectLoadedState) {
               List<SubjectModel> subjects = state.subjects;
 
-              return Container(
+              return SizedBox(
                 width: double.maxFinite,
                 child: ListView.builder(
                   shrinkWrap: true,
@@ -38,7 +38,7 @@ Future<SubjectModel?> chooseSubject(BuildContext context) {
                     return ListTile(
                       title: Text(
                         "Name: ${subjects[index].name}",
-                        style: TextStyle(fontSize: 20),
+                        style: const TextStyle(fontSize: 20),
                       ),
                       subtitle: Text("Id: ${subjects[index].id}"),
                       onTap: () {
@@ -50,7 +50,7 @@ Future<SubjectModel?> chooseSubject(BuildContext context) {
                 ),
               );
             }
-            return Center(
+            return const Center(
               child: Text("User topilmadi!"),
             );
           },
@@ -60,7 +60,7 @@ Future<SubjectModel?> chooseSubject(BuildContext context) {
             onPressed: () {
               Navigator.of(context).pop();
             },
-            child: Text('Bekor qilish'),
+            child: const Text('Bekor qilish'),
           ),
         ],
       );

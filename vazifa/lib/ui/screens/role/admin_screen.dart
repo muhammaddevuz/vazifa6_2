@@ -24,7 +24,7 @@ class _AdminScreenState extends State<AdminScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: CustomDrawerForAdmin(),
+      drawer: const CustomDrawerForAdmin(),
       appBar: AppBar(
         actions: [
           IconButton(
@@ -35,7 +35,7 @@ class _AdminScreenState extends State<AdminScreen> {
             },
           ),
         ],
-        title: Text(
+        title: const Text(
           "Admin Panel",
           style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
         ),
@@ -43,7 +43,7 @@ class _AdminScreenState extends State<AdminScreen> {
       ),
       body: BlocBuilder<GroupBloc, GroupState>(builder: (context, state) {
         if (state is GroupLoadingState) {
-          return Center(
+          return const Center(
             child: CircularProgressIndicator(),
           );
         }
@@ -54,14 +54,14 @@ class _AdminScreenState extends State<AdminScreen> {
         }
         if (state is GroupLoadedState) {
           return ListView.builder(
-            padding: EdgeInsets.symmetric(horizontal: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 20),
             itemCount: state.groups.length,
             itemBuilder: (context, index) {
               return GroupItemForAdmin(groupModel: state.groups[index]);
             },
           );
         }
-        return Center(
+        return const Center(
           child: Text("Grouplar topilmadi!"),
         );
       }),

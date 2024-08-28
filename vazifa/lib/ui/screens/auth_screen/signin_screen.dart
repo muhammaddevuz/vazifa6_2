@@ -123,11 +123,11 @@ class SignInScreen extends StatelessWidget {
                       obscureText: true,
                     ),
                     const SizedBox(height: 20),
-                    Row(
+                    const Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         InkWell(
-                          child: const Text(
+                          child: Text(
                             "Forgot Password?",
                             style: TextStyle(
                               fontWeight: FontWeight.bold,

@@ -24,16 +24,16 @@ class _SubjectScreenState extends State<SubjectScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           "Subjects",
           style: TextStyle(fontSize: 25, fontWeight: FontWeight.w600),
         ),
         centerTitle: true,
       ),
-      drawer: CustomDrawerForAdmin(),
+      drawer: const CustomDrawerForAdmin(),
       body: BlocBuilder<SubjectBloc, SubjectState>(builder: (context, state) {
         if (state is SubjectLoadingState) {
-          return Center(
+          return const Center(
             child: CircularProgressIndicator(),
           );
         }
@@ -44,7 +44,7 @@ class _SubjectScreenState extends State<SubjectScreen> {
         }
         if (state is SubjectLoadedState) {
           return Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 20),
             child: ListView.builder(
               itemCount: state.subjects.length,
               itemBuilder: (context, index) {
@@ -53,7 +53,7 @@ class _SubjectScreenState extends State<SubjectScreen> {
             ),
           );
         }
-        return Center(
+        return const Center(
           child: Text("Roomlar topilmadi!"),
         );
       }),
@@ -62,12 +62,12 @@ class _SubjectScreenState extends State<SubjectScreen> {
           Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => ManageSubject(
+                builder: (context) => const ManageSubject(
                   subjectModel: null,
                 ),
               ));
         },
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
     );
   }

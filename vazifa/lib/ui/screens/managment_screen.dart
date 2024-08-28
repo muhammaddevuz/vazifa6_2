@@ -27,7 +27,7 @@ class _ManagmentScreenState extends State<ManagmentScreen> {
     return Scaffold(
       body: BlocBuilder<CurrentUserBloc, CurrentUserState>(builder: (context, state) {
         if (state is CurrentUserLoadingState) {
-          return Center(
+          return const Center(
             child: CircularProgressIndicator(),
           );
         }
@@ -38,14 +38,14 @@ class _ManagmentScreenState extends State<ManagmentScreen> {
         }
         if (state is CurrentUserLoadedState) {
           if (state.user.role == 1) {
-            return UserScreen();
+            return const UserScreen();
           } else if (state.user.role == 2) {
-            return TeacherScreeen();
+            return const TeacherScreeen();
           } else if (state.user.role == 3) {
-            return AdminScreen();
+            return const AdminScreen();
           }
         }
-        return Center(
+        return const Center(
           child: Text("User topilmadi!"),
         );
       }),

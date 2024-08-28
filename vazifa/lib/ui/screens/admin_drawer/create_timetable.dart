@@ -3,9 +3,11 @@ import 'package:vazifa/ui/widget/choose_room.dart';
 
 class CreateTimetable extends StatefulWidget {
   final int groupId;
-  CreateTimetable({required this.groupId});
+  const CreateTimetable({super.key, required this.groupId});
   @override
-  _CreateTimetableState createState() => _CreateTimetableState();
+  State<StatefulWidget> createState() {
+    return _CreateTimetableState();
+  }
 }
 
 class _CreateTimetableState extends State<CreateTimetable> {
@@ -43,7 +45,7 @@ class _CreateTimetableState extends State<CreateTimetable> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           "Create Timetable",
           style: TextStyle(fontSize: 25, fontWeight: FontWeight.w600),
         ),
@@ -54,7 +56,7 @@ class _CreateTimetableState extends State<CreateTimetable> {
         child: Column(
           children: [
             DropdownButton<int>(
-              hint: Text("Hafta kunini tanlang"),
+              hint: const Text("Hafta kunini tanlang"),
               value: selectedDayIndex,
               onChanged: (newValue) {
                 setState(() {
@@ -70,11 +72,11 @@ class _CreateTimetableState extends State<CreateTimetable> {
                 );
               }).toList(),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("Boshlanish vaqti:"),
+                const Text("Boshlanish vaqti:"),
                 ElevatedButton(
                   onPressed: () => _selectTime(context, true),
                   child: Text(startTime == null
@@ -83,11 +85,11 @@ class _CreateTimetableState extends State<CreateTimetable> {
                 ),
               ],
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("Tugash vaqti:"),
+                const Text("Tugash vaqti:"),
                 ElevatedButton(
                   onPressed: () => _selectTime(context, false),
                   child: Text(
@@ -95,7 +97,7 @@ class _CreateTimetableState extends State<CreateTimetable> {
                 ),
               ],
             ),
-            Spacer(),
+            const Spacer(),
             ElevatedButton(
               onPressed: selectedDayIndex != null &&
                       startTime != null &&
@@ -120,13 +122,11 @@ class _CreateTimetableState extends State<CreateTimetable> {
                       } else {
                         end = end.split(' ')[0];
                       }
-                      print(end);
-                      print(start);
-                      await ChooseRoom(context, widget.groupId,
+                      await chooseRoom(context, widget.groupId,
                           (selectedDayIndex! + 1), start, end);
                     }
                   : null,
-              child: Text("Get Rooms"),
+              child: const Text("Get Rooms"),
             ),
           ],
         ),

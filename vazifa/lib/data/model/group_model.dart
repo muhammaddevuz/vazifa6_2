@@ -5,8 +5,8 @@ import 'package:vazifa/data/model/user_model.dart';
 class GroupModel {
   int id;
   String name;
-  UserModel main_teacher;
-  UserModel assistant_teacher;
+  UserModel mainTeacher;
+  UserModel assistantTeacher;
   SubjectModel? subjectModel;
   List<UserModel> students;
   List<ClassModel> classes;
@@ -14,8 +14,8 @@ class GroupModel {
   GroupModel({
     required this.id,
     required this.name,
-    required this.main_teacher,
-    required this.assistant_teacher,
+    required this.mainTeacher,
+    required this.assistantTeacher,
     required this.subjectModel,
     required this.students,
     required this.classes,
@@ -34,8 +34,8 @@ class GroupModel {
     return GroupModel(
       id: map['id'],
       name: map['name'],
-      main_teacher: UserModel.fromMap(map['main_teacher']),
-      assistant_teacher: UserModel.fromMap(map['assistant_teacher']),
+      mainTeacher: UserModel.fromMap(map['main_teacher']),
+      assistantTeacher: UserModel.fromMap(map['assistant_teacher']),
       students: students,
       classes: classes,
       subjectModel: map['subject'] != null

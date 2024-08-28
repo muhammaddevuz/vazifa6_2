@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -7,11 +9,9 @@ class AuthInterceptor extends InterceptorsWrapper {
       RequestOptions options, RequestInterceptorHandler handler) async {
     // SharedPreferences dan tokenni olish
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? token = await prefs.getString("token");
-    print(token);
+    String? token =  prefs.getString("token");
 
     if (token != null) {
-      print("-------------------------------------------");
       options.headers["Authorization"] = "Bearer $token";
     } else {
       print("Token topilmadi");

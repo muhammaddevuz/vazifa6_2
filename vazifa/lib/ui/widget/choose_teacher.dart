@@ -13,11 +13,11 @@ Future<UserModel?> chooseTeacher(BuildContext context) {
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        title: Text("O'qituvchi tanlang"),
+        title: const Text("O'qituvchi tanlang"),
         content: BlocBuilder<UsersBloc, UsersState>(
           builder: (context, state) {
             if (state is UsersLoadingState) {
-              return Center(
+              return const Center(
                 child: CircularProgressIndicator(),
               );
             }
@@ -30,7 +30,7 @@ Future<UserModel?> chooseTeacher(BuildContext context) {
               List<UserModel> roleUsers =
                   state.users.where((element) => element.role == 2).toList();
 
-              return Container(
+              return SizedBox(
                 width: double.maxFinite,
                 child: ListView.builder(
                   shrinkWrap: true,
@@ -39,17 +39,17 @@ Future<UserModel?> chooseTeacher(BuildContext context) {
                     return ListTile(
                       title: Text(
                         roleUsers[index].name,
-                        style: TextStyle(fontSize: 20),
+                        style: const TextStyle(fontSize: 20),
                       ),
-                      subtitle: Text(roleUsers[index].phone),
+                      subtitle: Text(roleUsers[index].phone!),
                       leading: Container(
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                           shape: BoxShape.circle,
                           color: Colors.grey,
                         ),
                         clipBehavior: Clip.hardEdge,
                         child: roleUsers[index].photo == null
-                            ? Icon(
+                            ? const Icon(
                                 Icons.person,
                                 size: 40,
                               )
@@ -67,7 +67,7 @@ Future<UserModel?> chooseTeacher(BuildContext context) {
                 ),
               );
             }
-            return Center(
+            return const Center(
               child: Text("User topilmadi!"),
             );
           },
@@ -77,7 +77,7 @@ Future<UserModel?> chooseTeacher(BuildContext context) {
             onPressed: () {
               Navigator.of(context).pop();
             },
-            child: Text('Bekor qilish'),
+            child: const Text('Bekor qilish'),
           ),
         ],
       );

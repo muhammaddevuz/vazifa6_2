@@ -30,10 +30,10 @@ class _TeacherScreeenState extends State<TeacherScreeen> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => ProfileScreen(),
+                    builder: (context) => const ProfileScreen(),
                   ));
             },
-            icon: Icon(
+            icon: const Icon(
               Icons.person,
               size: 30,
             )),
@@ -54,7 +54,7 @@ class _TeacherScreeenState extends State<TeacherScreeen> {
       ),
       body: BlocBuilder<GroupBloc, GroupState>(builder: (context, state) {
         if (state is GroupLoadingState) {
-          return Center(
+          return const Center(
             child: CircularProgressIndicator(),
           );
         }
@@ -64,20 +64,20 @@ class _TeacherScreeenState extends State<TeacherScreeen> {
           );
         }
         if (state is GroupLoadedState) {
-          if (state.groups.length == 0) {
-            return Center(
+          if (state.groups.isEmpty) {
+            return const Center(
               child: Text("Guruxlar mavjud emas"),
             );
           }
           return ListView.builder(
-            padding: EdgeInsets.symmetric(horizontal: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 20),
             itemCount: state.groups.length,
             itemBuilder: (context, index) {
               return GroupItemForStudent(groupModel: state.groups[index]);
             },
           );
         }
-        return Center(
+        return const Center(
           child: Text("Grouplar topilmadi!"),
         );
       }),

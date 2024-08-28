@@ -15,13 +15,13 @@ class TimetableBloc extends Bloc<TimeTableEvent, TimeTableState> {
     final TimetableService timetableService = TimetableService();
     try {
       final Map<String, dynamic> response =
-          await timetableService.getGroupTimeTables(event.group_id);
+          await timetableService.getGroupTimeTables(event.groupId);
       dynamic box = response['data'];
       if (box.isEmpty) {
-        emit(TimeTableLoadedState(TimeTables: null));
+        emit(TimeTableLoadedState(timeTables: null));
       } else {
         Timetable timeTable = Timetable.fromMap(response['data']);
-        emit(TimeTableLoadedState(TimeTables: timeTable));
+        emit(TimeTableLoadedState(timeTables: timeTable));
       }
     } catch (e) {
       emit(TimeTableErrorState(error: e.toString()));
@@ -31,8 +31,8 @@ class TimetableBloc extends Bloc<TimeTableEvent, TimeTableState> {
   Future<void> _addTimetable(CreateTimeTableEvent event, emit) async {
     final TimetableService timetableService = TimetableService();
     try {
-      await timetableService.createTimetable(event.group_id, event.room_id,
-          event.day_id, event.start_time, event.end_time);
+      await timetableService.createTimetable(event.groupId, event.roomId,
+          event.dayId, event.startTime, event.endTime);
     } catch (e) {
       emit(TimeTableErrorState(error: e.toString()));
     }

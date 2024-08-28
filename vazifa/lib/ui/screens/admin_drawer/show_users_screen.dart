@@ -24,7 +24,7 @@ class _ShowUsersScreenState extends State<ShowUsersScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: CustomDrawerForAdmin(),
+      drawer: const CustomDrawerForAdmin(),
       appBar: AppBar(
         title: Text(
           widget.role == 1
@@ -32,13 +32,13 @@ class _ShowUsersScreenState extends State<ShowUsersScreen> {
               : widget.role == 2
                   ? "Teachers"
                   : "Admins",
-          style: TextStyle(fontSize: 30, fontWeight: FontWeight.w600),
+          style: const TextStyle(fontSize: 30, fontWeight: FontWeight.w600),
         ),
         centerTitle: true,
       ),
       body: BlocBuilder<UsersBloc, UsersState>(builder: (context, state) {
         if (state is UsersLoadingState) {
-          return Center(
+          return const Center(
             child: CircularProgressIndicator(),
           );
         }
@@ -48,42 +48,40 @@ class _ShowUsersScreenState extends State<ShowUsersScreen> {
           );
         }
         if (state is UsersLoadedState) {
-          List<UserModel> role_users = [];
-          state.users.forEach(
-            (element) {
+          List<UserModel> roleUsers = [];
+          for (var element in state.users) {
               if (element.role == widget.role) {
-                role_users.add(element);
+                roleUsers.add(element);
               }
-            },
-          );
+            }
           return ListView.builder(
-            itemCount: role_users.length,
+            itemCount: roleUsers.length,
             itemBuilder: (context, index) {
               return ListTile(
                 title: Text(
-                  role_users[index].name,
-                  style: TextStyle(fontSize: 20),
+                  roleUsers[index].name,
+                  style: const TextStyle(fontSize: 20),
                 ),
-                subtitle: Text(role_users[index].phone),
+                subtitle: Text(roleUsers[index].phone!),
                 leading: CircleAvatar(
                   child: Container(
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                         shape: BoxShape.circle, color: Colors.grey),
                     clipBehavior: Clip.hardEdge,
-                    child: role_users[index].photo == null
-                        ? Icon(
+                    child: roleUsers[index].photo == null
+                        ? const Icon(
                             Icons.person,
                             size: 40,
                           )
                         : Image.network(
-                            "http://millima.flutterwithakmaljon.uz/storage/avatars/${role_users[index].photo}"),
+                            "http://millima.flutterwithakmaljon.uz/storage/avatars/${roleUsers[index].photo}"),
                   ),
                 ),
               );
             },
           );
         }
-        return Center(
+        return const Center(
           child: Text("User topilmadi!"),
         );
       }),

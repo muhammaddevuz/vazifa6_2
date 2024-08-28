@@ -17,20 +17,20 @@ class RoomItem extends StatelessWidget {
           width: double.infinity,
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20), color: Colors.blue),
-          padding: EdgeInsets.all(10),
+          padding: const EdgeInsets.all(10),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 "Room Name: ${roomModel.name}",
-                style: TextStyle(
+                style: const TextStyle(
                     fontSize: 25,
                     fontWeight: FontWeight.w500,
                     color: Colors.white),
               ),
               Text(
                 "Descripstion: ${roomModel.description}",
-                style: TextStyle(
+                style: const TextStyle(
                     fontSize: 25,
                     fontWeight: FontWeight.w500,
                     color: Colors.white),
@@ -40,7 +40,7 @@ class RoomItem extends StatelessWidget {
                 children: [
                   Text(
                     "Capacity: ${roomModel.capacity}",
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontSize: 25,
                         fontWeight: FontWeight.w500,
                         color: Colors.white),
@@ -57,7 +57,7 @@ class RoomItem extends StatelessWidget {
                                   ),
                                 ));
                           },
-                          icon: Icon(
+                          icon: const Icon(
                             Icons.edit,
                             size: 30,
                             color: Colors.white,
@@ -68,7 +68,7 @@ class RoomItem extends StatelessWidget {
                                 .read<RoomBloc>()
                                 .add(DeleteRoomEvent(roomId: roomModel.id));
                           },
-                          icon: Icon(
+                          icon: const Icon(
                             Icons.delete,
                             size: 30,
                             color: Colors.red,
@@ -80,7 +80,7 @@ class RoomItem extends StatelessWidget {
             ],
           ),
         ),
-        SizedBox(height: 15),
+        const SizedBox(height: 15),
       ],
     );
   }

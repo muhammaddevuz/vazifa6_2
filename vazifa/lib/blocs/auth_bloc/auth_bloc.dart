@@ -17,7 +17,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   void _onAppStarted(AppStarted event, Emitter<AuthState> emit) async {
     final prefs = await SharedPreferences.getInstance();
-    final token =await prefs.getString('token');
+    final token = prefs.getString('token');
     if (token != null) {
       emit(Authenticated(token: token));
     } else {

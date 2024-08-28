@@ -30,7 +30,7 @@ class SubjectItem extends StatelessWidget {
                   ),
                 );
               },
-              icon: Icon(
+              icon: const Icon(
                 Icons.edit,
                 size: 30,
                 color: Colors.blue,
@@ -42,7 +42,7 @@ class SubjectItem extends StatelessWidget {
                     .read<SubjectBloc>()
                     .add(DeleteSubjectEvent(subjectId: subjectModel.id));
               },
-              icon: Icon(
+              icon: const Icon(
                 Icons.delete,
                 size: 30,
                 color: Colors.red,

@@ -12,14 +12,14 @@ class GetTeacherGroupsEvent extends GroupEvent {}
 class UpdateGroupEvent extends GroupEvent {
   final int groupId;
   final String name;
-  final int main_teacher_id;
-  final int assistant_teacher_id;
+  final int mainTeacherId;
+  final int assistantTeacherId;
 
   UpdateGroupEvent({
     required this.groupId,
     required this.name,
-    required this.main_teacher_id,
-    required this.assistant_teacher_id,
+    required this.mainTeacherId,
+    required this.assistantTeacherId,
   });
 }
 class DeleteGroupEvent extends GroupEvent {
@@ -32,14 +32,14 @@ class DeleteGroupEvent extends GroupEvent {
 
 class AddGroupEvent extends GroupEvent {
   final String name;
-  final int main_teacher_id;
-  final int assistant_teacher_id;
+  final int maintTeacherId;
+  final int assistantTeacherId;
   final int subjectId;
 
   AddGroupEvent({
     required this.name,
-    required this.main_teacher_id,
-    required this.assistant_teacher_id,
+    required this.maintTeacherId,
+    required this.assistantTeacherId,
     required this.subjectId,
   });
 }

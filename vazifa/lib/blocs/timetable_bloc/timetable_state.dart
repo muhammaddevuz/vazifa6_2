@@ -11,9 +11,9 @@ class TimeTableInitialState extends TimeTableState {}
 class TimeTableLoadingState extends TimeTableState {}
 
 class TimeTableLoadedState extends TimeTableState {
-  final Timetable? TimeTables;
+  final Timetable? timeTables;
 
-  TimeTableLoadedState({required this.TimeTables});
+  TimeTableLoadedState({required this.timeTables});
 }
 
 

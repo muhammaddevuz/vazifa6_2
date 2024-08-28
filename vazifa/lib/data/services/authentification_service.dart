@@ -50,7 +50,6 @@ class AuthentificationService {
         "http://millima.flutterwithakmaljon.uz/api/logout",
       );
 
-      print(response);
 
       if (response.data['success'] == true) {
         return "success";

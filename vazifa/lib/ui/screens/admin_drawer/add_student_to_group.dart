@@ -23,11 +23,9 @@ class _AddGroupState extends State<AddStudentToGroup> {
   void initState() {
     super.initState();
 
-    widget.groupModel.students.forEach(
-      (element) {
+    for (var element in widget.groupModel.students) {
         students.add(element.id);
-      },
-    );
+      }
   }
 
   @override
@@ -35,7 +33,7 @@ class _AddGroupState extends State<AddStudentToGroup> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text(
+        title: const Text(
           "Add Student To Group",
           style: TextStyle(fontSize: 30, fontWeight: FontWeight.w600),
         ),
@@ -51,15 +49,15 @@ class _AddGroupState extends State<AddStudentToGroup> {
                 Expanded(
                   child: Row(
                     children: [
-                      Text(
+                      const Text(
                         "Students Id:  ",
                         style: TextStyle(
                             fontSize: 22, fontWeight: FontWeight.w600),
                       ),
                       Expanded(
                         child: Text(
-                          "${students.join(", ")}",
-                          style: TextStyle(
+                          students.join(", "),
+                          style: const TextStyle(
                               fontSize: 18, fontWeight: FontWeight.w500),
                         ),
                       ),
@@ -74,7 +72,7 @@ class _AddGroupState extends State<AddStudentToGroup> {
                         setState(() {});
                       }
                     },
-                    icon: Icon(
+                    icon: const Icon(
                       CupertinoIcons.person_add_solid,
                       size: 30,
                     ))
@@ -87,13 +85,13 @@ class _AddGroupState extends State<AddStudentToGroup> {
                   Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => AdminScreen(),
+                        builder: (context) => const AdminScreen(),
                       ));
                 },
                 style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.blue,
-                    padding: EdgeInsets.fromLTRB(30, 10, 30, 10)),
-                child: Text(
+                    padding: const EdgeInsets.fromLTRB(30, 10, 30, 10)),
+                child: const Text(
                   "Add Students",
                   style: TextStyle(
                       fontSize: 25,

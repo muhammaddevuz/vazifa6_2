@@ -1,26 +1,26 @@
 class ClassModel {
   int id;
-  String room_name;
-  String day_name;
-  String start_time;
-  String end_time;
+  String roomName;
+  String dayName;
+  String startTime;
+  String endTime;
 
   ClassModel({
     required this.id,
-    required this.room_name,
-    required this.day_name,
-    required this.start_time,
-    required this.end_time,
+    required this.roomName,
+    required this.dayName,
+    required this.startTime,
+    required this.endTime,
   });
 
   // Factory constructor for creating a ClassModel from a map
   factory ClassModel.fromMap(Map<String, dynamic> map) {
     return ClassModel(
       id: map['id'],
-      room_name: map['room']['name'],
-      day_name: map['day']['name'],
-      start_time: map['start_time'],
-      end_time: map['end_time'],
+      roomName: map['room']['name'],
+      dayName: map['day']['name'],
+      startTime: map['start_time'],
+      endTime: map['end_time'],
     );
   }
 
@@ -28,10 +28,10 @@ class ClassModel {
   Map<String, dynamic> toMap() {
     return {
       'id': id,
-      'room_id': room_name,
-      'day_id': day_name,
-      'start_time': start_time,
-      'end_time': end_time,
+      'room_id': roomName,
+      'day_id': dayName,
+      'start_time': startTime,
+      'end_time': endTime,
     };
   }
 }

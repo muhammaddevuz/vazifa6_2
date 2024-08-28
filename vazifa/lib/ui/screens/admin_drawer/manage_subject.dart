@@ -7,7 +7,7 @@ import 'package:vazifa/ui/screens/admin_drawer/subject_screen.dart';
 
 class ManageSubject extends StatefulWidget {
   final SubjectModel? subjectModel;
-  ManageSubject({super.key, required this.subjectModel});
+  const ManageSubject({super.key, required this.subjectModel});
 
   @override
   State<ManageSubject> createState() => _ManageSubjectState();
@@ -31,14 +31,14 @@ class _ManageSubjectState extends State<ManageSubject> {
         centerTitle: true,
         title: Text(
           widget.subjectModel == null ? "Add Subject" : "Edit Subject",
-          style: TextStyle(fontSize: 30, fontWeight: FontWeight.w600),
+          style: const TextStyle(fontSize: 30, fontWeight: FontWeight.w600),
         ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Column(
           children: [
-            SizedBox(height: 15),
+            const SizedBox(height: 15),
             TextField(
               controller: nameEditingController,
               decoration: InputDecoration(
@@ -46,7 +46,7 @@ class _ManageSubjectState extends State<ManageSubject> {
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(25))),
             ),
-            SizedBox(height: 15),
+            const SizedBox(height: 15),
             ElevatedButton(
                 onPressed: () {
                   context.read<SubjectBloc>().add(AddSubjectEvent(
@@ -54,15 +54,15 @@ class _ManageSubjectState extends State<ManageSubject> {
                   Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => SubjectScreen(),
+                        builder: (context) => const SubjectScreen(),
                       ));
                 },
                 style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.blue,
-                    padding: EdgeInsets.fromLTRB(30, 10, 30, 10)),
+                    padding: const EdgeInsets.fromLTRB(30, 10, 30, 10)),
                 child: Text(
                   widget.subjectModel == null ? "Add Subject" : "Edit Subject",
-                  style: TextStyle(
+                  style: const TextStyle(
                       fontSize: 25,
                       fontWeight: FontWeight.w600,
                       color: Colors.white),

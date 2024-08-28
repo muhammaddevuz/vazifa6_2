@@ -45,11 +45,11 @@ class _UserProfileScreenState extends State<ProfileScreen> {
             onPressed: () {
               Navigator.pop(context);
             },
-            icon: Icon(
+            icon: const Icon(
               Icons.arrow_back,
               size: 30,
             )),
-        title: Text(
+        title: const Text(
           "Profile Screen",
           style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
         ),
@@ -57,12 +57,12 @@ class _UserProfileScreenState extends State<ProfileScreen> {
       ),
       body: BlocBuilder<CurrentUserBloc, CurrentUserState>(builder: (context, state) {
         if (state is CurrentUserLoadingState) {
-          return Center(
+          return const Center(
             child: CircularProgressIndicator(),
           );
         } else if (state is CurrentUserLoadedState) {
           nameEditingController.text = state.user.name;
-          phoneEditingController.text = state.user.phone;
+          phoneEditingController.text = state.user.phone!;
           emailEditingController.text = state.user.email ?? "";
           return Padding(
             padding: const EdgeInsets.all(20.0),
@@ -102,7 +102,7 @@ class _UserProfileScreenState extends State<ProfileScreen> {
                             bottom: 5,
                             child: IconButton(
                                 onPressed: openGallery,
-                                icon: Icon(
+                                icon: const Icon(
                                   Icons.edit_square,
                                   color: Colors.blue,
                                   size: 30,
@@ -112,7 +112,7 @@ class _UserProfileScreenState extends State<ProfileScreen> {
                       ),
                     ],
                   ),
-                  SizedBox(height: 15),
+                  const SizedBox(height: 15),
                   TextField(
                     controller: nameEditingController,
                     decoration: InputDecoration(
@@ -120,7 +120,7 @@ class _UserProfileScreenState extends State<ProfileScreen> {
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(25))),
                   ),
-                  SizedBox(height: 15),
+                  const SizedBox(height: 15),
                   TextField(
                     controller: phoneEditingController,
                     decoration: InputDecoration(
@@ -128,7 +128,7 @@ class _UserProfileScreenState extends State<ProfileScreen> {
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(25))),
                   ),
-                  SizedBox(height: 15),
+                  const SizedBox(height: 15),
                   TextField(
                     controller: emailEditingController,
                     decoration: InputDecoration(
@@ -136,7 +136,7 @@ class _UserProfileScreenState extends State<ProfileScreen> {
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(25))),
                   ),
-                  SizedBox(height: 15),
+                  const SizedBox(height: 15),
                   ElevatedButton(
                       onPressed: () {
                         context.read<CurrentUserBloc>().add(UpdateCurrentUserEvent(
@@ -148,8 +148,8 @@ class _UserProfileScreenState extends State<ProfileScreen> {
                       },
                       style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.blue,
-                          padding: EdgeInsets.fromLTRB(30, 10, 30, 10)),
-                      child: Text(
+                          padding: const EdgeInsets.fromLTRB(30, 10, 30, 10)),
+                      child: const Text(
                         "Update",
                         style: TextStyle(
                             fontSize: 25,
@@ -165,7 +165,7 @@ class _UserProfileScreenState extends State<ProfileScreen> {
             child: Text(state.error),
           );
         } else {
-          return Center(
+          return const Center(
             child: Text("User Topilmadi"),
           );
         }

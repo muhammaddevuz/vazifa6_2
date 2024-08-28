@@ -29,7 +29,7 @@ class _GroupInformationScreenState extends State<GroupInformationScreen> {
           centerTitle: true,
           title: Text(
             widget.groupModel.name,
-            style: TextStyle(fontSize: 30, fontWeight: FontWeight.w600),
+            style: const TextStyle(fontSize: 30, fontWeight: FontWeight.w600),
           ),
         ),
         Padding(
@@ -40,16 +40,17 @@ class _GroupInformationScreenState extends State<GroupInformationScreen> {
               Padding(
                 padding: const EdgeInsets.only(left: 10),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     if (widget.groupModel.subjectModel != null)
                       Text(
                         "Subject: ${widget.groupModel.subjectModel!.name}",
-                        style: TextStyle(
-                            fontSize: 25,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.white),
+                        style: const TextStyle(
+                          fontSize: 25,
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
-                    Text(
+                    const Text(
                       "Teachers",
                       style:
                           TextStyle(fontSize: 25, fontWeight: FontWeight.w600),
@@ -59,47 +60,47 @@ class _GroupInformationScreenState extends State<GroupInformationScreen> {
               ),
               ListTile(
                 title: Text(
-                  widget.groupModel.main_teacher.name,
-                  style: TextStyle(fontSize: 20),
+                  widget.groupModel.mainTeacher.name,
+                  style: const TextStyle(fontSize: 20),
                 ),
-                subtitle: Text(widget.groupModel.main_teacher.phone),
+                subtitle: Text(widget.groupModel.mainTeacher.phone!),
                 leading: Container(
                   width: 80,
-                  decoration:
-                      BoxDecoration(shape: BoxShape.circle, color: Colors.grey),
+                  decoration: const BoxDecoration(
+                      shape: BoxShape.circle, color: Colors.grey),
                   clipBehavior: Clip.hardEdge,
-                  child: widget.groupModel.main_teacher.photo == null
-                      ? Icon(
+                  child: widget.groupModel.mainTeacher.photo == null
+                      ? const Icon(
                           Icons.person,
                           size: 50,
                         )
                       : Image.network(
-                          "http://millima.flutterwithakmaljon.uz/storage/avatars/${widget.groupModel.main_teacher.photo}"),
+                          "http://millima.flutterwithakmaljon.uz/storage/avatars/${widget.groupModel.mainTeacher.photo}"),
                 ),
               ),
               ListTile(
                 title: Text(
-                  widget.groupModel.assistant_teacher.name,
-                  style: TextStyle(fontSize: 20),
+                  widget.groupModel.assistantTeacher.name,
+                  style: const TextStyle(fontSize: 20),
                 ),
-                subtitle: Text(widget.groupModel.assistant_teacher.phone),
+                subtitle: Text(widget.groupModel.assistantTeacher.phone!),
                 leading: Container(
                   width: 80,
-                  decoration:
-                      BoxDecoration(shape: BoxShape.circle, color: Colors.grey),
+                  decoration: const BoxDecoration(
+                      shape: BoxShape.circle, color: Colors.grey),
                   clipBehavior: Clip.hardEdge,
-                  child: widget.groupModel.assistant_teacher.photo == null
-                      ? Icon(
+                  child: widget.groupModel.assistantTeacher.photo == null
+                      ? const Icon(
                           Icons.person,
                           size: 50,
                         )
                       : Image.network(
-                          "http://millima.flutterwithakmaljon.uz/storage/avatars/${widget.groupModel.assistant_teacher.photo}"),
+                          "http://millima.flutterwithakmaljon.uz/storage/avatars/${widget.groupModel.assistantTeacher.photo}"),
                 ),
               ),
-              SizedBox(height: 20),
-              Padding(
-                padding: const EdgeInsets.only(left: 10),
+              const SizedBox(height: 20),
+              const Padding(
+                padding: EdgeInsets.only(left: 10),
                 child: Text(
                   "Students",
                   style: TextStyle(fontSize: 25, fontWeight: FontWeight.w600),
@@ -117,16 +118,17 @@ class _GroupInformationScreenState extends State<GroupInformationScreen> {
                 return ListTile(
                   title: Text(
                     widget.groupModel.students[index].name,
-                    style: TextStyle(fontSize: 20),
+                    style: const TextStyle(fontSize: 20),
                   ),
-                  subtitle: Text(widget.groupModel.students[index].phone),
+                  subtitle: Text(widget.groupModel.students[index].phone ??
+                      "raqam mavjud emas"),
                   leading: Container(
                     width: 80,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                         shape: BoxShape.circle, color: Colors.grey),
                     clipBehavior: Clip.hardEdge,
                     child: widget.groupModel.students[index].photo == null
-                        ? Icon(
+                        ? const Icon(
                             Icons.person,
                             size: 50,
                           )

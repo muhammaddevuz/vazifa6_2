@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:dio/dio.dart';
 import 'package:vazifa/data/services/authentification_interseptor.dart';
 
@@ -44,7 +46,7 @@ class SubjectService {
       return response.data;
     } catch (e) {
       print('Error getting Subjects: $e');
-      throw e;
+      rethrow;
     }
   }
 

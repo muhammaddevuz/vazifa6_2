@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vazifa/blocs/group_bloc/group_event.dart';
 import 'package:vazifa/blocs/group_bloc/group_state.dart';
@@ -73,8 +75,8 @@ class GroupBloc extends Bloc<GroupEvent, GroupState> {
   Future<void> _addGroups(AddGroupEvent event, emit) async {
     final GroupService groupService = GroupService();
     try {
-      await groupService.addGroup(event.name, event.main_teacher_id,
-          event.assistant_teacher_id, event.subjectId);
+      await groupService.addGroup(event.name, event.maintTeacherId,
+          event.assistantTeacherId, event.subjectId);
       add(GetGroupsEvent());
     } catch (e) {
       emit(GroupErrorState(error: e.toString()));
@@ -95,7 +97,7 @@ class GroupBloc extends Bloc<GroupEvent, GroupState> {
     final GroupService groupService = GroupService();
     try {
       await groupService.updateGroup(event.groupId, event.name,
-          event.main_teacher_id, event.assistant_teacher_id);
+          event.mainTeacherId, event.assistantTeacherId);
       add(GetGroupsEvent());
     } catch (e) {
       emit(GroupErrorState(error: e.toString()));

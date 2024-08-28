@@ -32,7 +32,7 @@ class GroupItemForAdmin extends StatelessWidget {
             width: double.infinity,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20), color: Colors.blue),
-            padding: EdgeInsets.all(10),
+            padding: const EdgeInsets.all(10),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -42,7 +42,7 @@ class GroupItemForAdmin extends StatelessWidget {
                     Expanded(
                       child: Text(
                         "Group Name: ${groupModel.name}",
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontSize: 25,
                             fontWeight: FontWeight.w500,
                             color: Colors.white),
@@ -57,7 +57,7 @@ class GroupItemForAdmin extends StatelessWidget {
                                     AddStudentToGroup(groupModel: groupModel),
                               ));
                         },
-                        icon: Icon(
+                        icon: const Icon(
                           CupertinoIcons.person_add_solid,
                           size: 30,
                           color: Colors.white,
@@ -68,8 +68,8 @@ class GroupItemForAdmin extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "Main Teacher Id: ${groupModel.main_teacher.id}",
-                      style: TextStyle(
+                      "Main Teacher Id: ${groupModel.mainTeacher.id}",
+                      style: const TextStyle(
                           fontSize: 25,
                           fontWeight: FontWeight.w500,
                           color: Colors.white),
@@ -83,7 +83,7 @@ class GroupItemForAdmin extends StatelessWidget {
                                     UpdateGroup(group: groupModel),
                               ));
                         },
-                        icon: Icon(
+                        icon: const Icon(
                           Icons.edit,
                           size: 30,
                           color: Colors.white,
@@ -94,8 +94,8 @@ class GroupItemForAdmin extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "Asistant Teacher id: ${groupModel.assistant_teacher.id}",
-                      style: TextStyle(
+                      "Asistant Teacher id: ${groupModel.assistantTeacher.id}",
+                      style: const TextStyle(
                           fontSize: 25,
                           fontWeight: FontWeight.w500,
                           color: Colors.white),
@@ -106,7 +106,7 @@ class GroupItemForAdmin extends StatelessWidget {
                               .read<GroupBloc>()
                               .add(DeleteGroupEvent(groupId: groupModel.id));
                         },
-                        icon: Icon(
+                        icon: const Icon(
                           Icons.delete,
                           size: 30,
                           color: Colors.red,
@@ -125,7 +125,7 @@ class GroupItemForAdmin extends StatelessWidget {
                                     ShowGroupTimetable(groupModel: groupModel),
                               ));
                         },
-                        child: Text("Show TimeTable")),
+                        child: const Text("Show TimeTable")),
                     ElevatedButton(
                         onPressed: () {
                           Navigator.push(
@@ -136,14 +136,14 @@ class GroupItemForAdmin extends StatelessWidget {
                                 ),
                               ));
                         },
-                        child: Text("Add TimeTable")),
+                        child: const Text("Add TimeTable")),
                   ],
                 )
               ],
             ),
           ),
         ),
-        SizedBox(height: 15),
+        const SizedBox(height: 15),
       ],
     );
   }

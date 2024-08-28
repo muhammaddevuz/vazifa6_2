@@ -20,7 +20,7 @@ class _ShowGroupTimetableState extends State<ShowGroupTimetable> {
     super.initState();
     context
         .read<TimetableBloc>()
-        .add(GetTimeTablesEvent(group_id: widget.groupModel.id));
+        .add(GetTimeTablesEvent(groupId: widget.groupModel.id));
   }
 
   @override
@@ -29,14 +29,14 @@ class _ShowGroupTimetableState extends State<ShowGroupTimetable> {
       appBar: AppBar(
         title: Text(
           "${widget.groupModel.name} TimeTable",
-          style: TextStyle(fontSize: 25, fontWeight: FontWeight.w600),
+          style: const TextStyle(fontSize: 25, fontWeight: FontWeight.w600),
         ),
         centerTitle: true,
       ),
       body: BlocBuilder<TimetableBloc, TimeTableState>(
         builder: (context, state) {
           if (state is TimeTableLoadingState) {
-            return Center(
+            return const Center(
               child: CircularProgressIndicator(),
             );
           }
@@ -46,14 +46,14 @@ class _ShowGroupTimetableState extends State<ShowGroupTimetable> {
             );
           }
           if (state is TimeTableLoadedState) {
-            if (state.TimeTables == null) {
-              return Center(
+            if (state.timeTables == null) {
+              return const Center(
                 child: Text("Timetable hali mavjud emas"),
               );
             }
             return ListView(
-              padding: EdgeInsets.all(8.0),
-              children: state.TimeTables!.week_days.entries.map((entry) {
+              padding: const EdgeInsets.all(8.0),
+              children: state.timeTables!.weekDays.entries.map((entry) {
                 String weekDay = entry.key;
                 List<WeekDays> timetable = entry.value;
 
@@ -62,7 +62,7 @@ class _ShowGroupTimetableState extends State<ShowGroupTimetable> {
                   children: [
                     Text(
                       weekDay,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                         color: Colors.blue,
@@ -72,17 +72,17 @@ class _ShowGroupTimetableState extends State<ShowGroupTimetable> {
                       return Card(
                         child: ListTile(
                           title: Text(day.room),
-                          subtitle: Text("${day.start_time} - ${day.end_time}"),
+                          subtitle: Text("${day.startTime} - ${day.endTime}"),
                         ),
                       );
-                    }).toList(),
-                    SizedBox(height: 20),
+                    }),
+                    const SizedBox(height: 20),
                   ],
                 );
               }).toList(),
             );
           }
-          return Center(
+          return const Center(
             child: Text("Timetable topilmadi!"),
           );
         },

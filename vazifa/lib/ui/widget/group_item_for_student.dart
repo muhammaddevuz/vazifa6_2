@@ -35,34 +35,34 @@ class _GroupItemForStudentState extends State<GroupItemForStudent> {
             width: double.infinity,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20), color: Colors.blue),
-            padding: EdgeInsets.all(10),
+            padding: const EdgeInsets.all(10),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 
                 Text(
                   "Group Name: ${widget.groupModel.name}",
-                  style: TextStyle(
+                  style: const TextStyle(
                       fontSize: 25,
                       fontWeight: FontWeight.w500,
                       color: Colors.white),
                 ),
                 Text(
-                  "Main Teacher Id: ${widget.groupModel.main_teacher.id}",
-                  style: TextStyle(
+                  "Main Teacher Id: ${widget.groupModel.mainTeacher.id}",
+                  style: const TextStyle(
                       fontSize: 25,
                       fontWeight: FontWeight.w500,
                       color: Colors.white),
                 ),
                 Text(
-                  "Assistant Teacher Id: ${widget.groupModel.assistant_teacher.id}",
-                  style: TextStyle(
+                  "Assistant Teacher Id: ${widget.groupModel.assistantTeacher.id}",
+                  style: const TextStyle(
                       fontSize: 25,
                       fontWeight: FontWeight.w500,
                       color: Colors.white),
                 ),
                 ExpansionTile(
-                  title: Row(
+                  title: const Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
@@ -84,19 +84,18 @@ class _GroupItemForStudentState extends State<GroupItemForStudent> {
                     Padding(
                       padding: const EdgeInsets.all(10.0),
                       child: ListView.builder(
-                        padding: EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.all(8.0),
                         itemCount: widget.groupModel.classes.length,
                         shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
+                        physics: const NeverScrollableScrollPhysics(),
                         itemBuilder: (context, index) {
                           List<ClassModel> classes = widget.groupModel.classes;
-                          print(classes[index].room_name);
                           return Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                classes[index].day_name,
-                                style: TextStyle(
+                                classes[index].dayName,
+                                style: const TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.white,
@@ -104,13 +103,13 @@ class _GroupItemForStudentState extends State<GroupItemForStudent> {
                               ),
                               Card(
                                 child: ListTile(
-                                  title: Text(classes[index].room_name),
+                                  title: Text(classes[index].roomName),
                                   subtitle: Text(
-                                    "${classes[index].start_time} - ${classes[index].end_time}",
+                                    "${classes[index].startTime} - ${classes[index].endTime}",
                                   ),
                                 ),
                               ),
-                              SizedBox(height: 20),
+                              const SizedBox(height: 20),
                             ],
                           );
                         },
@@ -122,7 +121,7 @@ class _GroupItemForStudentState extends State<GroupItemForStudent> {
             ),
           ),
         ),
-        SizedBox(height: 15),
+        const SizedBox(height: 15),
         // Timetable qismi uchun ExpansionTile
       ],
     );

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "861536492258",
+    "project_id": "millima-e94ad",
+    "storage_bucket": "millima-e94ad.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:861536492258:android:7a4b986a295c4f5df61cbb",
+        "android_client_info": {
+          "package_name": "com.example.vazifa"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "861536492258-ijh0o8bofauljadimt7bnreh2ia903rg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBDPPkXCeii5tzy1L5SlAwFdPljHJiga_c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "861536492258-ijh0o8bofauljadimt7bnreh2ia903rg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

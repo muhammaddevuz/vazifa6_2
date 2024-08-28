@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:dio/dio.dart';
 import 'package:vazifa/data/services/authentification_interseptor.dart';
 
@@ -46,21 +48,18 @@ class RoomService {
       return response.data;
     } catch (e) {
       print('Error getting rooms: $e');
-      throw e;
+      rethrow;
     }
   }
 
   Future<Map<String, dynamic>> getAvailableRooms(
-    int day_id,
-    String start_time,
-    String end_time,
+    int dayId,
+    String startTime,
+    String endTime,
   ) async {
     try {
-      print(
-          "http://millima.flutterwithakmaljon.uz/api/available-rooms?day_id=$day_id&start_time=$start_time&end_time=$end_time");
-      print("-------------------------------");
       final response = await dio.get(
-        'http://millima.flutterwithakmaljon.uz/api/available-rooms?day_id=$day_id&start_time=$start_time&end_time=$end_time',
+        'http://millima.flutterwithakmaljon.uz/api/available-rooms?day_id=$dayId&start_time=$startTime&end_time=$endTime',
       );
       if (response.data['success'] == false) {
         throw response.data;
@@ -68,7 +67,7 @@ class RoomService {
       return response.data;
     } catch (e) {
       print('Error getting room: $e');
-      throw e;
+      rethrow;
     }
   }
 

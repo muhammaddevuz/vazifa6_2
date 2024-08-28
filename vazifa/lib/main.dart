@@ -13,10 +13,12 @@ import 'package:vazifa/ui/screens/auth_screen/signup_for_teacher.dart';
 import 'package:vazifa/ui/screens/auth_screen/signup_screen.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -37,14 +39,13 @@ class MyApp extends StatelessWidget {
           '/': (context) => BlocBuilder<AuthBloc, AuthState>(
                 builder: (context, state) {
                   if (state is Authenticated) {
-                    return ManagmentScreen();
+                    return const ManagmentScreen();
                   } else if (state is UnauthenticatedState) {
                     return SignInScreen();
                   } else if (state is AuthErrorState) {
                     if (state.error == 'register') {
-                      return SignUpScreen();
+                      return const SignUpScreen();
                     } else {
-                      print("ssssssss");
                       return SignInScreen();
                     }
                   } else {
@@ -52,9 +53,9 @@ class MyApp extends StatelessWidget {
                   }
                 },
               ),
-          '/signup': (context) => SignUpScreen(),
-          '/signupteacher': (context) => SignupForTeacher(),
-          '/home': (context) => ManagmentScreen(),
+          '/signup': (context) => const SignUpScreen(),
+          '/signupteacher': (context) => const SignupForTeacher(),
+          '/home': (context) => const ManagmentScreen(),
         },
       ),
     );

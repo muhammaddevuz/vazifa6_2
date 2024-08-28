@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:dio/dio.dart';
 import 'package:vazifa/data/services/authentification_interseptor.dart';
 
@@ -48,7 +50,7 @@ class GroupService {
       return response.data;
     } catch (e) {
       print('Error adding group: $e');
-      throw e;
+      rethrow;
     }
   }
 
@@ -64,7 +66,7 @@ class GroupService {
       return response.data;
     } catch (e) {
       print('Error adding group: $e');
-      throw e;
+      rethrow;
     }
   }
   Future<Map<String, dynamic>> getTeacherGroups() async {
@@ -79,7 +81,7 @@ class GroupService {
       return response.data;
     } catch (e) {
       print('Error adding group: $e');
-      throw e;
+      rethrow;
     }
   }
 

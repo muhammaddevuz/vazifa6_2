@@ -8,14 +8,14 @@ import 'package:vazifa/blocs/timetable_bloc/timetable_event.dart';
 import 'package:vazifa/data/model/room_model.dart';
 import 'package:vazifa/ui/screens/role/admin_screen.dart';
 
-Future ChooseRoom(
+Future chooseRoom(
   BuildContext context,
-  int group_id,
-  int day_id,
-  String start_time,
-  String end_time,
+  int groupId,
+  int dayId,
+  String startTime,
+  String endTime,
 ) {
-  BlocProvider.of<RoomBloc>(context).add(GetAvailableRoomsEvent(day_id: day_id, start_time: start_time, end_time: end_time));
+  BlocProvider.of<RoomBloc>(context).add(GetAvailableRoomsEvent(dayId: dayId, startTime: startTime, endTime: endTime));
   RoomModel? selectedRoom;
 
   return showDialog(
@@ -24,11 +24,11 @@ Future ChooseRoom(
       return StatefulBuilder(
         builder: (context, setState) {
           return AlertDialog(
-            title: Text("Xonani tanlang"),
+            title: const Text("Xonani tanlang"),
             content: BlocBuilder<RoomBloc, RoomState>(
               builder: (context, state) {
                 if (state is RoomLoadingState) {
-                  return Center(
+                  return const Center(
                     child: CircularProgressIndicator(),
                   );
                 }
@@ -40,7 +40,7 @@ Future ChooseRoom(
                 if (state is RoomLoadedState) {
                   List<RoomModel> rooms = state.rooms;
 
-                  return Container(
+                  return SizedBox(
                     width: double.maxFinite,
                     child: ListView.builder(
                       shrinkWrap: true,
@@ -49,11 +49,11 @@ Future ChooseRoom(
                         return ListTile(
                           title: Text(
                             rooms[index].name,
-                            style: TextStyle(fontSize: 20),
+                            style: const TextStyle(fontSize: 20),
                           ),
                           subtitle: Text(rooms[index].capacity.toString()),
                           trailing: selectedRoom == rooms[index]
-                              ? Icon(Icons.check, color: Colors.green)
+                              ? const Icon(Icons.check, color: Colors.green)
                               : null,
                           onTap: () {
                             setState(() {
@@ -65,7 +65,7 @@ Future ChooseRoom(
                     ),
                   );
                 }
-                return Center(
+                return const Center(
                   child: Text("Xonalar topilmadi!"),
                 );
               },
@@ -75,21 +75,21 @@ Future ChooseRoom(
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                child: Text('Bekor qilish'),
+                child: const Text('Bekor qilish'),
               ),
               ElevatedButton(
                 onPressed: selectedRoom != null
                     ? () {
                         context.read<TimetableBloc>().add(CreateTimeTableEvent(
-                            group_id: group_id,
-                            room_id: selectedRoom!.id,
-                            day_id: day_id,
-                            start_time: start_time,
-                            end_time: end_time));
-                            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => AdminScreen(),));
+                            groupId: groupId,
+                            roomId: selectedRoom!.id,
+                            dayId: dayId,
+                            startTime: startTime,
+                            endTime: endTime));
+                            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const AdminScreen(),));
                       }
                     : null,
-                child: Text("Qo'shish"),
+                child: const Text("Qo'shish"),
               ),
             ],
           );

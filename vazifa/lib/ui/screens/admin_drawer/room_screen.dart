@@ -25,16 +25,16 @@ class _RoomScreenState extends State<RoomScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           "Rooms",
           style: TextStyle(fontSize: 25, fontWeight: FontWeight.w600),
         ),
         centerTitle: true,
       ),
-      drawer: CustomDrawerForAdmin(),
+      drawer: const CustomDrawerForAdmin(),
       body: BlocBuilder<RoomBloc, RoomState>(builder: (context, state) {
         if (state is RoomLoadingState) {
-          return Center(
+          return const Center(
             child: CircularProgressIndicator(),
           );
         }
@@ -45,14 +45,14 @@ class _RoomScreenState extends State<RoomScreen> {
         }
         if (state is RoomLoadedState) {
           return ListView.builder(
-            padding: EdgeInsets.symmetric(horizontal: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 20),
             itemCount: state.rooms.length,
             itemBuilder: (context, index) {
               return RoomItem(roomModel: state.rooms[index]);
             },
           );
         }
-        return Center(
+        return const Center(
           child: Text("Roomlar topilmadi!"),
         );
       }),
@@ -61,12 +61,12 @@ class _RoomScreenState extends State<RoomScreen> {
           Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => ManageRoom(
+                builder: (context) => const ManageRoom(
                   roomModel: null,
                 ),
               ));
         },
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
     );
   }
